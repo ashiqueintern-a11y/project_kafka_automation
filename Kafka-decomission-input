@@ -1,0 +1,255 @@
+# ==============================================================================
+# Kafka Broker Decommission/Recommission Configuration
+# ==============================================================================
+# This configuration file controls the behavior of the broker decommission
+# and recommission tool.
+#
+# Quick Start (Minimal Configuration):
+#   Only bootstrap_servers is required. Everything else is auto-detected!
+#
+#   bootstrap_servers: "your-kafka-host:6667"
+#
+# That's it! The script will auto-detect:
+#   - Kafka bin path
+#   - Zookeeper servers
+#   - Server.properties location
+# ==============================================================================
+
+# ==============================================================================
+# REQUIRED CONFIGURATION
+# ==============================================================================
+
+# Kafka Bootstrap Servers (REQUIRED)
+# Format: "host:port" or "host1:port1,host2:port2,host3:port3"
+bootstrap_servers: "stg-hdpashique101:6667"
+
+# ==============================================================================
+# AUTO-DETECTED CONFIGURATION (Optional Overrides)
+# ==============================================================================
+# The following settings are automatically detected by the script.
+# Only uncomment and set them if auto-detection fails or you want to override.
+
+# Kafka Binary Path
+# Auto-detected from: /etc/kafka/*/0/kafka-env.sh or standard paths
+# Uncomment to override:
+# kafka_bin_path: "/usr/odp/3.2.2.0-1/kafka/bin"
+
+# Zookeeper Server
+# Auto-detected from: /etc/kafka/conf/server.properties
+# Format: "host:port" (only first server needed for zookeeper-shell)
+# Uncomment to override:
+# zookeeper_server: "stg-hdpashique103:2181"
+
+# Kafka Server Configuration File (server.properties)
+# Auto-detected from standard paths
+# Uncomment to override:
+# kafka_server_config: "/etc/kafka/conf/server.properties"
+
+# ==============================================================================
+# RESOURCE THRESHOLDS
+# ==============================================================================
+# These thresholds are used when selecting new leaders during decommission.
+# The script will prefer brokers with resources below these thresholds.
+
+# Maximum CPU usage percentage for candidate brokers
+# Note: CPU monitoring requires OpenTSDB configuration (see below)
+# Default: 80
+cpu_threshold: 80
+
+# Maximum disk usage percentage for candidate brokers
+# Note: Disk usage is always checked via kafka-log-dirs.sh
+# Default: 85
+disk_threshold: 85
+
+# ==============================================================================
+# KAFKA CONFIGURATION
+# ==============================================================================
+
+# Minimum In-Sync Replicas Required
+# The script validates that all topics have at least this value set
+# Default: 2
+min_isr_required: 2
+
+# ==============================================================================
+# TIMEOUT SETTINGS (seconds)
+# ==============================================================================
+
+# Reassignment Timeout
+# Maximum time to wait for partition reassignment to execute
+# Default: 300 (5 minutes)
+reassignment_timeout: 300
+
+# Verification Interval
+# Time between checks when verifying reassignment completion
+# Default: 10
+verification_interval: 10
+
+# ISR Synchronization Timeout
+# Maximum time to wait for broker to rejoin ISR during recommission
+# This is critical - if replicas don't sync within this time, recommission fails
+# Default: 600 (10 minutes)
+# Increase this value if you have large partitions or slow networks
+isr_sync_timeout: 600
+
+# ISR Check Interval
+# Time between ISR status checks during recommission
+# Default: 10
+isr_check_interval: 10
+
+# ==============================================================================
+# DIRECTORIES
+# ==============================================================================
+
+# State Directory
+# Location where decommission state files are saved
+# These files are used during recommission to restore the broker
+# Default: "./kafka_demotion_state"
+state_directory: "/data/kafka_demotion_state"
+
+# Log Directory
+# Location where operation logs are stored
+# Default: "./logs"
+log_directory: "/var/log/kafka_decommission"
+
+# ==============================================================================
+# OPTIONAL: OPENTSDB FOR CPU MONITORING
+# ==============================================================================
+# If configured, the script will query OpenTSDB for broker CPU metrics
+# and use this information when selecting new leaders during decommission.
+# 
+# If not configured, the script will still work but will only consider
+# disk usage when selecting new leaders.
+#
+# Format: "http://hostname:port"
+# Uncomment to enable:
+# opentsdb_url: "http://opentsdb-read-no-dp-limit.nixy.stg-drove.phonepe.nb6/api/query"
+
+# ==============================================================================
+# CONFIGURATION EXAMPLES
+# ==============================================================================
+
+# Example 1: Minimal Configuration (Recommended for most deployments)
+# ---------------------------------------------------------------------
+# bootstrap_servers: "kafka-broker-1:6667"
+#
+# That's all you need! Everything else is auto-detected.
+
+# Example 2: Multi-Broker Cluster
+# ---------------------------------------------------------------------
+# bootstrap_servers: "kafka1:6667,kafka2:6667,kafka3:6667"
+# state_directory: "/data/kafka_state"
+# log_directory: "/var/log/kafka_ops"
+
+# Example 3: Custom Timeouts for Large Clusters
+# ---------------------------------------------------------------------
+# bootstrap_servers: "kafka-broker:6667"
+# isr_sync_timeout: 1200  # 20 minutes for large partitions
+# reassignment_timeout: 600  # 10 minutes for many partitions
+
+# Example 4: With OpenTSDB Monitoring
+# ---------------------------------------------------------------------
+# bootstrap_servers: "kafka-broker:6667"
+# opentsdb_url: "http://opentsdb.example.com:4242"
+# cpu_threshold: 70  # More conservative threshold
+
+# Example 5: Manual Paths (If Auto-Detection Fails)
+# ---------------------------------------------------------------------
+# bootstrap_servers: "kafka-broker:6667"
+# kafka_bin_path: "/opt/kafka/bin"
+# zookeeper_server: "zk1.example.com:2181"
+# kafka_server_config: "/opt/kafka/config/server.properties"
+
+# ==============================================================================
+# DISK USAGE MONITORING - AUTOMATIC!
+# ==============================================================================
+# The script automatically uses `kafka-log-dirs.sh` to get actual Kafka 
+# disk usage for all brokers. This doesn't require any configuration!
+#
+# The script will:
+# 1. Query kafka-log-dirs.sh for all brokers
+# 2. Calculate total partition sizes per broker
+# 3. Consider disk usage when selecting new leaders
+#
+# NOTE: Unlike CPU monitoring, disk usage checking doesn't require OpenTSDB
+# ==============================================================================
+
+# ==============================================================================
+# AUTO-DETECTION DETAILS
+# ==============================================================================
+# 
+# How Auto-Detection Works:
+# 
+# 1. Kafka Bin Path Detection (Priority Order):
+#    a. Parse /etc/kafka/*/0/kafka-env.sh for CLASSPATH
+#    b. Check standard paths: /usr/odp/current/kafka-broker/bin
+#    c. Check: /usr/hdp/current/kafka-broker/bin
+#    d. Fall back to: find /usr -name kafka-topics.sh
+#
+# 2. Zookeeper Server Detection:
+#    a. Parse /etc/kafka/conf/server.properties
+#    b. Look for: zookeeper.connect=host1:2181,host2:2181
+#    c. Extract first server from the list
+#
+# 3. Server Config Detection:
+#    a. Check: /etc/kafka/conf/server.properties
+#    b. Check: /usr/odp/current/kafka-broker/config/server.properties
+#    c. Check: /usr/hdp/current/kafka-broker/config/server.properties
+#
+# If auto-detection fails for any setting, you can manually specify it above.
+# ==============================================================================
+
+# ==============================================================================
+# USAGE NOTES
+# ==============================================================================
+#
+# Decommission (Stop Broker):
+#   python3 kafka_decommission.py --config config.yaml --broker-id 1001 --dry-run
+#   python3 kafka_decommission.py --config config.yaml --broker-id 1001
+#
+# Recommission (Start Broker):
+#   python3 kafka_decommission.py --config config.yaml --broker-id 1001 --recommission --dry-run
+#   python3 kafka_decommission.py --config config.yaml --broker-id 1001 --recommission
+#
+# Skip Pre-checks (Not Recommended):
+#   python3 kafka_decommission.py --config config.yaml --broker-id 1001 --skip-prechecks
+#
+# Custom Log Directory:
+#   python3 kafka_decommission.py --config config.yaml --broker-id 1001 --log-dir /tmp/logs
+#
+# ==============================================================================
+
+# ==============================================================================
+# SAFETY NOTES
+# ==============================================================================
+#
+# 1. ALWAYS run with --dry-run first to see what will happen
+# 2. Ensure cluster is healthy (no under-replicated partitions) before decommission
+# 3. During recommission, the script WAITS for ISR sync before restoring leadership
+# 4. State files are critical - keep them safe for rollback capability
+# 5. One broker at a time - don't decommission multiple brokers simultaneously
+# 6. Schedule during maintenance windows or low-traffic periods
+# 7. Monitor cluster health before, during, and after operations
+#
+# ==============================================================================
+
+# ==============================================================================
+# TROUBLESHOOTING
+# ==============================================================================
+#
+# If auto-detection fails:
+#   - Manually specify kafka_bin_path, zookeeper_server, kafka_server_config
+#   - Check that Kafka is installed in standard paths
+#   - Verify /etc/kafka/conf/server.properties exists and is readable
+#
+# If ISR sync times out during recommission:
+#   - Increase isr_sync_timeout (e.g., to 1200 for 20 minutes)
+#   - Check broker logs for replication issues
+#   - Verify network connectivity between brokers
+#   - Check disk I/O performance
+#
+# If reassignment fails:
+#   - Check cluster controller health
+#   - Verify no under-replicated partitions
+#   - Ensure sufficient resources on target brokers
+#
+# ==============================================================================
