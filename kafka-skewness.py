@@ -17,7 +17,7 @@ Optimized for Kafka 2.8.2 with PhonePe infrastructure
 - Intelligent health-aware rebalancing
 - Cruise Control-inspired algorithm
 
-Version: 4.2.0 (Kafka 2.8.2 Compatible - Reorder-Only Mode)
+Version: 4.2.1 (Fixed timeout parameter bug)
 """
 
 import subprocess
@@ -151,7 +151,7 @@ class KafkaPartitionBalancer:
             self.kafka_bin_dir = self._find_kafka_bin_directory()
         
         logger.info("=" * 80)
-        logger.info("Kafka Partition Balancer v4.3.0 (Auto-Detect + kafka-log-dirs.sh)")
+        logger.info("Kafka Partition Balancer v4.2.1 (Fixed timeout bug)")
         logger.info(f"Bootstrap Server: {self.bootstrap_server}")
         logger.info(f"Zookeeper: {self.zookeeper_connect}")
         logger.info(f"Kafka Bin: {self.kafka_bin_dir}")
@@ -312,11 +312,11 @@ class KafkaPartitionBalancer:
                 return False
         return True
     
-    def run_kafka_command(self, command: List[str]) -> Tuple[bool, str, str]:
-        """Execute a Kafka CLI command."""
+    def run_kafka_command(self, command: List[str], timeout: int = 300) -> Tuple[bool, str, str]:
+        """Execute a Kafka CLI command with configurable timeout."""
         try:
             logger.debug(f"Executing: {' '.join(command)}")
-            result = subprocess.run(command, capture_output=True, text=True, timeout=300)
+            result = subprocess.run(command, capture_output=True, text=True, timeout=timeout)
             
             # Log raw output for debugging Zookeeper commands
             if 'zookeeper-shell' in ' '.join(command):
@@ -324,7 +324,7 @@ class KafkaPartitionBalancer:
             
             return (result.returncode == 0, result.stdout, result.stderr)
         except subprocess.TimeoutExpired:
-            return (False, "", "Command timeout")
+            return (False, "", f"Command timeout after {timeout} seconds")
         except Exception as e:
             return (False, "", str(e))
     
@@ -718,6 +718,20 @@ class KafkaPartitionBalancer:
         
         return None
     
+    def _create_fallback_metrics(self, broker_list: List[int]) -> Dict[int, BrokerMetrics]:
+        """Create fallback metrics when kafka-log-dirs.sh fails."""
+        metrics = {}
+        for broker_id in broker_list:
+            broker_metric = BrokerMetrics(broker_id)
+            if broker_id in self.broker_info:
+                broker_metric.hostname = self.broker_info[broker_id]['host']
+            broker_metric.cpu_usage = 30.0
+            broker_metric.disk_usage_percent = 50.0
+            broker_metric.disk_total_bytes = 1024 * 1024 * 1024 * 1024  # 1TB
+            broker_metric.disk_usage_bytes = broker_metric.disk_total_bytes // 2
+            metrics[broker_id] = broker_metric
+        return metrics
+    
     def collect_broker_metrics(self, broker_list: List[int]) -> Dict[int, BrokerMetrics]:
         """Collect broker health metrics using kafka-log-dirs.sh."""
         logger.info("\n[METRICS] Collecting Broker Metrics using kafka-log-dirs.sh...")
@@ -734,36 +748,45 @@ class KafkaPartitionBalancer:
         if not success:
             logger.error(f"❌ Failed to get log dirs: {stderr}")
             logger.warning("Falling back to default metrics")
-            # Fallback to defaults
-            metrics = {}
-            for broker_id in broker_list:
-                broker_metric = BrokerMetrics(broker_id)
-                if broker_id in self.broker_info:
-                    broker_metric.hostname = self.broker_info[broker_id]['host']
-                broker_metric.cpu_usage = 30.0
-                broker_metric.disk_usage_percent = 50.0
-                broker_metric.disk_total_bytes = 1024 * 1024 * 1024 * 1024
-                broker_metric.disk_usage_bytes = broker_metric.disk_total_bytes // 2
-                metrics[broker_id] = broker_metric
-            self.broker_metrics = metrics
-            return metrics
+            return self._create_fallback_metrics(broker_list)
         
         # Parse JSON output from kafka-log-dirs.sh
-        # Note: kafka-log-dirs.sh outputs text headers before JSON:
-        # "Querying brokers for log directories information"
-        # "Received log directory information from brokers 1001,1002,1003,1004"
-        # {"version":1,"brokers":[...]}
-        # We need to extract only the JSON part
+        # Note: kafka-log-dirs.sh outputs text headers before JSON
         metrics = {}
         try:
-            # Find the JSON part (starts with '{')
+            # Method 1: Find JSON by looking for opening brace
             json_start = stdout.find('{')
             if json_start == -1:
+                logger.warning("No JSON found in kafka-log-dirs.sh output")
+                logger.debug(f"Output was:\n{stdout[:1000]}")
                 raise ValueError("No JSON found in kafka-log-dirs.sh output")
             
-            json_str = stdout[json_start:]
+            # Extract only the JSON part
+            json_str = stdout[json_start:].strip()
+            
+            # Method 2: If there's trailing text after JSON, find the closing brace
+            brace_count = 0
+            json_end = -1
+            for i, char in enumerate(json_str):
+                if char == '{':
+                    brace_count += 1
+                elif char == '}':
+                    brace_count -= 1
+                    if brace_count == 0:
+                        json_end = i + 1
+                        break
+            
+            if json_end > 0:
+                json_str = json_str[:json_end]
+            
+            logger.debug(f"Extracted JSON (first 500 chars): {json_str[:500]}")
+            
             data = json.loads(json_str)
             brokers = data.get('brokers', [])
+            
+            if not brokers:
+                logger.warning("No broker data in JSON output")
+                raise ValueError("No broker data found")
             
             logger.info(f"\n📊 Disk Usage Summary (from kafka-log-dirs.sh):")
             logger.info("=" * 60)
@@ -794,7 +817,6 @@ class KafkaPartitionBalancer:
                 total_gb = total_bytes / (1024 ** 3)
                 
                 # Estimate disk percentage (you can adjust these thresholds)
-                # Since we don't have total disk capacity, we estimate based on usage
                 if total_gb > 100:
                     broker_metric.disk_usage_percent = 90.0
                 elif total_gb > 50:
@@ -804,7 +826,7 @@ class KafkaPartitionBalancer:
                 else:
                     broker_metric.disk_usage_percent = 30.0
                 
-                # Set CPU to a default (since we don't have OpenTSDB)
+                # Set CPU to a default
                 broker_metric.cpu_usage = 30.0
                 
                 metrics[broker_id] = broker_metric
@@ -821,34 +843,16 @@ class KafkaPartitionBalancer:
             
             logger.info("=" * 60)
             
-        except json.JSONDecodeError as e:
+        except (json.JSONDecodeError, ValueError) as e:
             logger.error(f"Failed to parse kafka-log-dirs output: {e}")
-            logger.debug(f"Output was: {stdout[:500]}")
+            logger.debug(f"Full output was:\n{stdout}")
             logger.warning("Falling back to default metrics")
-            # Fallback to defaults
-            for broker_id in broker_list:
-                broker_metric = BrokerMetrics(broker_id)
-                if broker_id in self.broker_info:
-                    broker_metric.hostname = self.broker_info[broker_id]['host']
-                broker_metric.cpu_usage = 30.0
-                broker_metric.disk_usage_percent = 50.0
-                broker_metric.disk_total_bytes = 1024 * 1024 * 1024 * 1024
-                broker_metric.disk_usage_bytes = broker_metric.disk_total_bytes // 2
-                metrics[broker_id] = broker_metric
-        except ValueError as e:
-            logger.error(f"Failed to find JSON in kafka-log-dirs output: {e}")
-            logger.debug(f"Output was: {stdout[:500]}")
+            return self._create_fallback_metrics(broker_list)
+        except Exception as e:
+            logger.error(f"Unexpected error processing kafka-log-dirs output: {e}")
+            logger.debug(f"Full output was:\n{stdout}")
             logger.warning("Falling back to default metrics")
-            # Fallback to defaults
-            for broker_id in broker_list:
-                broker_metric = BrokerMetrics(broker_id)
-                if broker_id in self.broker_info:
-                    broker_metric.hostname = self.broker_info[broker_id]['host']
-                broker_metric.cpu_usage = 30.0
-                broker_metric.disk_usage_percent = 50.0
-                broker_metric.disk_total_bytes = 1024 * 1024 * 1024 * 1024
-                broker_metric.disk_usage_bytes = broker_metric.disk_total_bytes // 2
-                metrics[broker_id] = broker_metric
+            return self._create_fallback_metrics(broker_list)
         
         self.broker_metrics = metrics
         return metrics
@@ -1060,9 +1064,6 @@ class KafkaPartitionBalancer:
         if not skewness_detected:
             logger.info("✅ Replica distribution is balanced (both disk and count)")
         
-        logger.info(f"\n✅ Eligible Brokers for Reassignment: {eligible_brokers}")
-        
-        return skewness_detected, eligible_brokers
     
     def generate_intelligent_reassignment_plan(self, metadata: Dict, analysis: Dict) -> Optional[Dict]:
         """
@@ -1330,9 +1331,6 @@ class KafkaPartitionBalancer:
             projected = broker_leader_count[broker_id]
             change = projected - current
             diff = projected - target_leaders_per_broker
-            logger.info(f"Broker {broker_id}: {current} → {projected} ({change:+d}, target: {target_leaders_per_broker:.1f}, diff: {diff:+.1f})")
-        
-        return reassignment
     
     def execute_preferred_leader_election_with_verification(self, dry_run: bool = True, 
                                                             metadata: Dict = None) -> bool:
@@ -1444,7 +1442,6 @@ class KafkaPartitionBalancer:
                 logger.info("Solution: Generate REORDER-ONLY plan (same brokers, different order)")
                 
                 # Generate a plan that ONLY reorders replicas for leader balance
-                # Don't enforce tolerance - allow any broker to be used
                 reorder_plan = self.generate_reorder_only_plan_for_leaders(metadata, analysis)
                 
                 if reorder_plan and not dry_run:
@@ -1664,8 +1661,6 @@ class KafkaPartitionBalancer:
             return True
         else:
             logger.error("❌ Failed")
-            logger.error(stderr)
-            return False
     
     def execute_reassignment_with_throttling(self, reassignment_plan: Dict, dry_run: bool = True,
                                             throttle_bytes_per_sec: int = None) -> bool:
@@ -1809,7 +1804,7 @@ class KafkaPartitionBalancer:
         Now includes two-phase leader election and batch-wise reassignment.
         """
         logger.info("\n" + "=" * 80)
-        logger.info("KAFKA PARTITION BALANCER v4.0 - ENHANCED")
+        logger.info("KAFKA PARTITION BALANCER v4.2.1 - ENHANCED")
         logger.info("=" * 80)
         
         # Phase 1: Discovery & Pre-checks
@@ -1942,7 +1937,7 @@ class KafkaPartitionBalancer:
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(
-        description='Kafka Partition Skewness Detection and Rebalancing Tool (v4.0 Enhanced)',
+        description='Kafka Partition Skewness Detection and Rebalancing Tool (v4.2.1 Fixed)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
