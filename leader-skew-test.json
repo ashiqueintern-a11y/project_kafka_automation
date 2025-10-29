@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "partitions": [
+    {"topic": "user-events", "partition": 0, "replicas": [1004, 1002, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 1, "replicas": [1004, 1001, 1002], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 2, "replicas": [1004, 1002, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 3, "replicas": [1004, 1001, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 4, "replicas": [1004, 1001, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 5, "replicas": [1004, 1003, 1002], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 6, "replicas": [1004, 1003, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 7, "replicas": [1004, 1001, 1002], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 8, "replicas": [1004, 1002, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 9, "replicas": [1004, 1003, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 10, "replicas": [1004, 1002, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 11, "replicas": [1004, 1003, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 12, "replicas": [1004, 1002, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 13, "replicas": [1004, 1003, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 14, "replicas": [1004, 1002, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 15, "replicas": [1004, 1001, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 16, "replicas": [1004, 1003, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 17, "replicas": [1004, 1001, 1002], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 18, "replicas": [1004, 1001, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 19, "replicas": [1004, 1002, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 20, "replicas": [1004, 1001, 1002], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 21, "replicas": [1004, 1002, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 22, "replicas": [1004, 1003, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 23, "replicas": [1004, 1002, 1001], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 24, "replicas": [1004, 1003, 1002], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 25, "replicas": [1004, 1001, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 26, "replicas": [1004, 1002, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 27, "replicas": [1004, 1001, 1002], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 28, "replicas": [1004, 1002, 1003], "log_dirs": ["any", "any", "any"]},
+    {"topic": "user-events", "partition": 29, "replicas": [1004, 1003, 1001], "log_dirs": ["any", "any", "any"]}
+  ]
+}
+

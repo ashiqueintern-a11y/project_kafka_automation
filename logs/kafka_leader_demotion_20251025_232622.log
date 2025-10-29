@@ -1,0 +1,83 @@
+2025-10-25 23:26:22,809 - KafkaLeaderDemotion - INFO - [setup_logging:77] - Logging initialized. Log file: ./logs/kafka_leader_demotion_20251025_232622.log
+2025-10-25 23:26:22,809 - KafkaLeaderDemotion - INFO - [main:1540] - Loading configuration from leader-demoter-input.yaml
+2025-10-25 23:26:22,813 - KafkaLeaderDemotion - INFO - [_load_config:106] - Configuration loaded from leader-demoter-input.yaml
+2025-10-25 23:26:22,813 - KafkaLeaderDemotion - INFO - [_validate_config:132] - Configuration validation passed
+2025-10-25 23:26:22,813 - KafkaLeaderDemotion - INFO - [main:1544] - Initializing Kafka cluster manager
+2025-10-25 23:26:22,813 - KafkaLeaderDemotion - INFO - [main:1569] - Operating in DEMOTION mode for broker 1001
+2025-10-25 23:26:22,813 - KafkaLeaderDemotion - INFO - [main:1571] - 🔍 DRY-RUN mode enabled - simulating demotion
+2025-10-25 23:26:22,813 - KafkaLeaderDemotion - INFO - [run_all_checks:608] - ======================================================================
+2025-10-25 23:26:22,814 - KafkaLeaderDemotion - INFO - [run_all_checks:609] - STARTING PRE-CHECK VALIDATION
+2025-10-25 23:26:22,814 - KafkaLeaderDemotion - INFO - [run_all_checks:610] - ======================================================================
+2025-10-25 23:26:22,814 - KafkaLeaderDemotion - INFO - [run_all_checks:623] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:22,814 - KafkaLeaderDemotion - INFO - [run_all_checks:624] - CHECK: Controller Health
+2025-10-25 23:26:22,814 - KafkaLeaderDemotion - INFO - [run_all_checks:625] - ──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:22,814 - KafkaLeaderDemotion - INFO - [check_controller_health:543] - Checking controller health
+2025-10-25 23:26:24,823 - KafkaLeaderDemotion - INFO - [check_controller_health:561] - Controller is broker 1003
+2025-10-25 23:26:24,824 - KafkaLeaderDemotion - INFO - [run_all_checks:629] - ✓ Controller Health: PASSED
+2025-10-25 23:26:24,824 - KafkaLeaderDemotion - INFO - [run_all_checks:623] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:24,824 - KafkaLeaderDemotion - INFO - [run_all_checks:624] - CHECK: Broker Existence
+2025-10-25 23:26:24,824 - KafkaLeaderDemotion - INFO - [run_all_checks:625] - ──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:24,824 - KafkaLeaderDemotion - INFO - [get_all_brokers:355] - Fetching all broker IDs
+2025-10-25 23:26:26,864 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1001
+2025-10-25 23:26:28,997 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1001 hostname: stg-hdpashique103.phonepe.nb6
+2025-10-25 23:26:28,997 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1002
+2025-10-25 23:26:30,983 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1002 hostname: stg-hdpashique102.phonepe.nb6
+2025-10-25 23:26:30,983 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1003
+2025-10-25 23:26:32,949 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1003 hostname: stg-hdpashique101.phonepe.nb6
+2025-10-25 23:26:32,950 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1004
+2025-10-25 23:26:35,058 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1004 hostname: stg-hdpashique104.phonepe.nb6
+2025-10-25 23:26:35,059 - KafkaLeaderDemotion - INFO - [get_all_brokers:383] - Found 4 brokers in cluster
+2025-10-25 23:26:35,059 - KafkaLeaderDemotion - INFO - [_check_broker_exists:655] - Broker 1001 found: stg-hdpashique103.phonepe.nb6
+2025-10-25 23:26:35,059 - KafkaLeaderDemotion - INFO - [run_all_checks:629] - ✓ Broker Existence: PASSED
+2025-10-25 23:26:35,059 - KafkaLeaderDemotion - INFO - [run_all_checks:623] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:35,059 - KafkaLeaderDemotion - INFO - [run_all_checks:624] - CHECK: Under-Replicated Partitions
+2025-10-25 23:26:35,060 - KafkaLeaderDemotion - INFO - [run_all_checks:625] - ──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:35,060 - KafkaLeaderDemotion - INFO - [get_partition_metadata:404] - Fetching partition metadata
+2025-10-25 23:26:38,092 - KafkaLeaderDemotion - ERROR - [get_partition_metadata:452] - Error getting partition metadata: local variable 'partition' referenced before assignment
+2025-10-25 23:26:38,093 - KafkaLeaderDemotion - INFO - [get_under_replicated_partitions:475] - Total under-replicated partitions: 0
+2025-10-25 23:26:38,093 - KafkaLeaderDemotion - INFO - [_check_urp:669] - No under-replicated partitions found
+2025-10-25 23:26:38,093 - KafkaLeaderDemotion - INFO - [run_all_checks:629] - ✓ Under-Replicated Partitions: PASSED
+2025-10-25 23:26:38,093 - KafkaLeaderDemotion - INFO - [run_all_checks:623] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:38,093 - KafkaLeaderDemotion - INFO - [run_all_checks:624] - CHECK: Topic Min ISR Configuration
+2025-10-25 23:26:38,093 - KafkaLeaderDemotion - INFO - [run_all_checks:625] - ──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:38,093 - KafkaLeaderDemotion - INFO - [get_partition_metadata:404] - Fetching partition metadata
+2025-10-25 23:26:41,031 - KafkaLeaderDemotion - ERROR - [get_partition_metadata:452] - Error getting partition metadata: local variable 'partition' referenced before assignment
+2025-10-25 23:26:41,032 - KafkaLeaderDemotion - INFO - [run_all_checks:629] - ✓ Topic Min ISR Configuration: PASSED
+2025-10-25 23:26:41,032 - KafkaLeaderDemotion - INFO - [run_all_checks:623] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:41,032 - KafkaLeaderDemotion - INFO - [run_all_checks:624] - CHECK: Follower ISR Status
+2025-10-25 23:26:41,032 - KafkaLeaderDemotion - INFO - [run_all_checks:625] - ──────────────────────────────────────────────────────────────────────
+2025-10-25 23:26:41,032 - KafkaLeaderDemotion - INFO - [get_partition_metadata:404] - Fetching partition metadata
+2025-10-25 23:26:44,014 - KafkaLeaderDemotion - ERROR - [get_partition_metadata:452] - Error getting partition metadata: local variable 'partition' referenced before assignment
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [run_all_checks:629] - ✓ Follower ISR Status: PASSED
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:723] - 
+======================================================================
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:724] - PRE-CHECK SUMMARY
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:725] - ======================================================================
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:726] - Passed: 5
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:727] - Failed: 0
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:735] - 
+Passed Checks:
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:737] -   ✓ Controller Health
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:737] -   ✓ Broker Existence
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:737] -   ✓ Under-Replicated Partitions
+2025-10-25 23:26:44,015 - KafkaLeaderDemotion - INFO - [_print_summary:737] -   ✓ Topic Min ISR Configuration
+2025-10-25 23:26:44,016 - KafkaLeaderDemotion - INFO - [_print_summary:737] -   ✓ Follower ISR Status
+2025-10-25 23:26:44,016 - KafkaLeaderDemotion - INFO - [_print_summary:739] - ======================================================================
+
+2025-10-25 23:26:44,017 - KafkaLeaderDemotion - INFO - [__init__:773] - ======================================================================
+2025-10-25 23:26:44,017 - KafkaLeaderDemotion - INFO - [__init__:774] - 🔍 DRY-RUN MODE ENABLED - No actual changes will be made
+2025-10-25 23:26:44,017 - KafkaLeaderDemotion - INFO - [__init__:775] - ======================================================================
+2025-10-25 23:26:44,017 - KafkaLeaderDemotion - INFO - [demote_broker:1174] - ======================================================================
+2025-10-25 23:26:44,017 - KafkaLeaderDemotion - INFO - [demote_broker:1176] - 🔍 DRY-RUN: SIMULATING LEADER DEMOTION FOR BROKER 1001
+2025-10-25 23:26:44,017 - KafkaLeaderDemotion - INFO - [demote_broker:1179] - ======================================================================
+2025-10-25 23:26:44,017 - KafkaLeaderDemotion - INFO - [get_partition_metadata:404] - Fetching partition metadata
+2025-10-25 23:26:46,921 - KafkaLeaderDemotion - ERROR - [get_partition_metadata:452] - Error getting partition metadata: local variable 'partition' referenced before assignment
+2025-10-25 23:26:46,921 - KafkaLeaderDemotion - INFO - [find_partitions_to_demote:801] - Found 0 partitions where broker 1001 is leader
+2025-10-25 23:26:46,922 - KafkaLeaderDemotion - WARNING - [demote_broker:1184] - No partitions found where broker 1001 is leader
+2025-10-25 23:26:46,922 - KafkaLeaderDemotion - INFO - [main:1589] - ✓ Leader demotion simulation completed successfully
+2025-10-25 23:26:46,922 - KafkaLeaderDemotion - INFO - [main:1590] - To execute for real: python kafka_leader_demotion.py --config leader-demoter-input.yaml --broker-id 1001

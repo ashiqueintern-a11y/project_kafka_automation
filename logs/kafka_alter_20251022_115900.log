@@ -1,0 +1,34 @@
+2025-10-22 11:59:00,829 - INFO - Log file: logs/kafka_alter_20251022_115900.log
+2025-10-22 11:59:00,832 - INFO - ✓ Configuration loaded and validated
+2025-10-22 11:59:00,835 - INFO - Using Kafka tools: /usr/odp/3.2.2.0-1/kafka/bin
+2025-10-22 11:59:00,835 - INFO - ================================================================================
+2025-10-22 11:59:00,836 - INFO - KAFKA TOPIC ALTERATION
+2025-10-22 11:59:00,836 - INFO - ================================================================================
+2025-10-22 11:59:00,836 - INFO - Topic: user-events
+2025-10-22 11:59:00,836 - INFO - Dry run: True
+2025-10-22 11:59:00,836 - INFO - ================================================================================
+2025-10-22 11:59:00,836 - INFO - Testing broker connectivity...
+2025-10-22 11:59:00,836 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server stg-hdpashique101:6667,stg-hdpashique102:6667
+2025-10-22 11:59:03,442 - INFO - ✓ Connected to brokers
+2025-10-22 11:59:03,442 - INFO - 
+================================================================================
+2025-10-22 11:59:03,442 - INFO - PROCESSING: PARTITION ALTERATION
+2025-10-22 11:59:03,442 - INFO - ================================================================================
+2025-10-22 11:59:03,442 - INFO - ================================================================================
+2025-10-22 11:59:03,442 - INFO - PARTITION INCREASE PRE-CHECKS
+2025-10-22 11:59:03,443 - INFO - ================================================================================
+2025-10-22 11:59:03,443 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101:6667,stg-hdpashique102:6667 --describe --topic user-events
+2025-10-22 11:59:06,301 - ERROR - Failed to get topic info: 'NoneType' object has no attribute 'group'
+2025-10-22 11:59:06,302 - ERROR - Fatal error: 'NoneType' object has no attribute 'group'
+Traceback (most recent call last):
+  File "kafka_topic_alter.py", line 575, in main
+    success = alterator.run()
+  File "kafka_topic_alter.py", line 461, in run
+    success &= self._alter_partitions(alterations['partitions'])
+  File "kafka_topic_alter.py", line 484, in _alter_partitions
+    if not self.checks.validate_partition_increase(self.config.topic_name, target, current):
+  File "kafka_topic_alter.py", line 329, in validate_partition_increase
+    info = self.kafka.get_topic_info(topic)
+  File "kafka_topic_alter.py", line 227, in get_topic_info
+    isr = eval(re.search(r'Isr:\s*(\[[\d,]+\])', line).group(1))
+AttributeError: 'NoneType' object has no attribute 'group'

@@ -1,0 +1,488 @@
+2025-10-26 01:24:20,455 - KafkaLeaderDemotion - INFO - [setup_logging:77] - Logging initialized. Log file: ./logs/kafka_leader_demotion_20251026_012420.log
+2025-10-26 01:24:20,455 - KafkaLeaderDemotion - INFO - [main:1602] - Loading configuration from leader-demoter-input.yaml
+2025-10-26 01:24:20,458 - KafkaLeaderDemotion - INFO - [_load_config:106] - Configuration loaded from leader-demoter-input.yaml
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [_validate_config:132] - Configuration validation passed
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [main:1606] - Initializing Kafka cluster manager
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [main:1631] - Operating in DEMOTION mode for broker 1001
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [main:1633] - 🔍 DRY-RUN mode enabled - simulating demotion
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [run_all_checks:660] - ======================================================================
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [run_all_checks:661] - STARTING PRE-CHECK VALIDATION
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [run_all_checks:662] - ======================================================================
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [run_all_checks:675] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:20,459 - KafkaLeaderDemotion - INFO - [run_all_checks:676] - CHECK: Controller Health
+2025-10-26 01:24:20,460 - KafkaLeaderDemotion - INFO - [run_all_checks:677] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:20,460 - KafkaLeaderDemotion - INFO - [check_controller_health:595] - Checking controller health
+2025-10-26 01:24:22,626 - KafkaLeaderDemotion - INFO - [check_controller_health:613] - Controller is broker 1003
+2025-10-26 01:24:22,627 - KafkaLeaderDemotion - INFO - [run_all_checks:681] - ✓ Controller Health: PASSED
+2025-10-26 01:24:22,627 - KafkaLeaderDemotion - INFO - [run_all_checks:675] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:22,627 - KafkaLeaderDemotion - INFO - [run_all_checks:676] - CHECK: Broker Existence
+2025-10-26 01:24:22,627 - KafkaLeaderDemotion - INFO - [run_all_checks:677] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:22,627 - KafkaLeaderDemotion - INFO - [get_all_brokers:355] - Fetching all broker IDs
+2025-10-26 01:24:24,651 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1001
+2025-10-26 01:24:26,648 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1001 hostname: stg-hdpashique103.phonepe.nb6
+2025-10-26 01:24:26,649 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1002
+2025-10-26 01:24:28,705 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1002 hostname: stg-hdpashique102.phonepe.nb6
+2025-10-26 01:24:28,705 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1003
+2025-10-26 01:24:30,780 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1003 hostname: stg-hdpashique101.phonepe.nb6
+2025-10-26 01:24:30,781 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1004
+2025-10-26 01:24:32,899 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1004 hostname: stg-hdpashique104.phonepe.nb6
+2025-10-26 01:24:32,899 - KafkaLeaderDemotion - INFO - [get_all_brokers:383] - Found 4 brokers in cluster
+2025-10-26 01:24:32,899 - KafkaLeaderDemotion - INFO - [_check_broker_exists:707] - Broker 1001 found: stg-hdpashique103.phonepe.nb6
+2025-10-26 01:24:32,899 - KafkaLeaderDemotion - INFO - [run_all_checks:681] - ✓ Broker Existence: PASSED
+2025-10-26 01:24:32,899 - KafkaLeaderDemotion - INFO - [run_all_checks:675] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:32,899 - KafkaLeaderDemotion - INFO - [run_all_checks:676] - CHECK: Under-Replicated Partitions
+2025-10-26 01:24:32,899 - KafkaLeaderDemotion - INFO - [run_all_checks:677] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:32,900 - KafkaLeaderDemotion - INFO - [get_partition_metadata:404] - Fetching partition metadata
+2025-10-26 01:24:35,793 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: secound
+2025-10-26 01:24:35,793 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-0, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,793 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-1, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,793 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:35,793 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: production2
+2025-10-26 01:24:35,793 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-0, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:35,793 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-1, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:35,793 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-2, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-3, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1001, 1002, 1004]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-4, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1002, 1003]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-5, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1001, 1003]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-6, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1002, 1003]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-7, Leader=1002, Replicas=[1002, 1003, 1004], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-8, Leader=1004, Replicas=[1004, 1001, 1003], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-9, Leader=1001, Replicas=[1001, 1002, 1003], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: test.event
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-0, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-1, Leader=1004, Replicas=[1004, 1003, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-2, Leader=1001, Replicas=[1001, 1003, 1004], ISR=[1001, 1003, 1004]
+2025-10-26 01:24:35,794 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-3, Leader=1002, Replicas=[1002, 1001, 1003], ISR=[1002, 1003, 1001]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-4, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-5, Leader=1004, Replicas=[1004, 1003, 1002], ISR=[1002, 1003, 1004]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: user-events
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-0, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-1, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-2, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-3, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-4, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-5, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-6, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-7, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-8, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:35,795 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-9, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-10, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-11, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-12, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-13, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-14, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-15, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-16, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-17, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-18, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-19, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-20, Leader=1003, Replicas=[1003, 1004, 1001], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:35,796 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-21, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1003, 1004]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-22, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-23, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-24, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-25, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-26, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-27, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-28, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-29, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: secound1
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-0, Leader=1001, Replicas=[1001, 1003, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-1, Leader=1002, Replicas=[1002, 1001, 1003], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1001, 1002, 1004]
+2025-10-26 01:24:35,797 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: production
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-0, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-1, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-3, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-4, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-5, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-6, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - INFO - [get_partition_metadata:483] - Retrieved metadata for 6 topics
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - INFO - [get_partition_metadata:487] - Total partitions: 59
+2025-10-26 01:24:35,798 - KafkaLeaderDemotion - INFO - [get_under_replicated_partitions:516] - Total under-replicated partitions: 0
+2025-10-26 01:24:35,799 - KafkaLeaderDemotion - INFO - [_check_urp:721] - No under-replicated partitions found
+2025-10-26 01:24:35,799 - KafkaLeaderDemotion - INFO - [run_all_checks:681] - ✓ Under-Replicated Partitions: PASSED
+2025-10-26 01:24:35,799 - KafkaLeaderDemotion - INFO - [run_all_checks:675] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:35,799 - KafkaLeaderDemotion - INFO - [run_all_checks:676] - CHECK: Topic Min ISR Configuration
+2025-10-26 01:24:35,799 - KafkaLeaderDemotion - INFO - [run_all_checks:677] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:35,799 - KafkaLeaderDemotion - INFO - [get_partition_metadata:404] - Fetching partition metadata
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: secound
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-0, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-1, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: production2
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-0, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-1, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-2, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:38,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-3, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1001, 1002, 1004]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-4, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1002, 1003]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-5, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1001, 1003]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-6, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1002, 1003]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-7, Leader=1002, Replicas=[1002, 1003, 1004], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-8, Leader=1004, Replicas=[1004, 1001, 1003], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-9, Leader=1001, Replicas=[1001, 1002, 1003], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: test.event
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-0, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-1, Leader=1004, Replicas=[1004, 1003, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-2, Leader=1001, Replicas=[1001, 1003, 1004], ISR=[1001, 1003, 1004]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-3, Leader=1002, Replicas=[1002, 1001, 1003], ISR=[1002, 1003, 1001]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-4, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:38,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-5, Leader=1004, Replicas=[1004, 1003, 1002], ISR=[1002, 1003, 1004]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: user-events
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-0, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-1, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-2, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-3, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-4, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-5, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-6, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-7, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-8, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-9, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,667 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-10, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-11, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-12, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-13, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-14, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-15, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-16, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-17, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-18, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-19, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-20, Leader=1003, Replicas=[1003, 1004, 1001], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:38,668 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-21, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1003, 1004]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-22, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-23, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-24, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-25, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-26, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-27, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-28, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-29, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: secound1
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-0, Leader=1001, Replicas=[1001, 1003, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-1, Leader=1002, Replicas=[1002, 1001, 1003], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1001, 1002, 1004]
+2025-10-26 01:24:38,669 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: production
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-0, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-1, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-3, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-4, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-5, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-6, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - INFO - [get_partition_metadata:483] - Retrieved metadata for 6 topics
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - INFO - [get_partition_metadata:487] - Total partitions: 59
+2025-10-26 01:24:38,670 - KafkaLeaderDemotion - DEBUG - [get_topic_config:542] - Fetching config for topic secound
+2025-10-26 01:24:41,508 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: min.insync.replicas=2
+2025-10-26 01:24:41,508 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: retention.ms=604800000
+2025-10-26 01:24:41,508 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: unclean.leader.election.enable=false
+2025-10-26 01:24:41,508 - KafkaLeaderDemotion - DEBUG - [_check_min_isr:751] - Topic secound: min.insync.replicas=2 ✓
+2025-10-26 01:24:41,508 - KafkaLeaderDemotion - DEBUG - [get_topic_config:542] - Fetching config for topic production2
+2025-10-26 01:24:44,273 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: min.insync.replicas=2
+2025-10-26 01:24:44,273 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: retention.ms=604800000
+2025-10-26 01:24:44,274 - KafkaLeaderDemotion - DEBUG - [_check_min_isr:751] - Topic production2: min.insync.replicas=2 ✓
+2025-10-26 01:24:44,274 - KafkaLeaderDemotion - DEBUG - [get_topic_config:542] - Fetching config for topic test.event
+2025-10-26 01:24:47,196 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: min.insync.replicas=2
+2025-10-26 01:24:47,196 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: retention.ms=604800000
+2025-10-26 01:24:47,196 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: unclean.leader.election.enable=false
+2025-10-26 01:24:47,196 - KafkaLeaderDemotion - DEBUG - [_check_min_isr:751] - Topic test.event: min.insync.replicas=2 ✓
+2025-10-26 01:24:47,196 - KafkaLeaderDemotion - DEBUG - [get_topic_config:542] - Fetching config for topic user-events
+2025-10-26 01:24:50,024 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: min.insync.replicas=2
+2025-10-26 01:24:50,024 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: retention.ms=604800000
+2025-10-26 01:24:50,024 - KafkaLeaderDemotion - DEBUG - [_check_min_isr:751] - Topic user-events: min.insync.replicas=2 ✓
+2025-10-26 01:24:50,024 - KafkaLeaderDemotion - DEBUG - [get_topic_config:542] - Fetching config for topic secound1
+2025-10-26 01:24:52,837 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: min.insync.replicas=2
+2025-10-26 01:24:52,838 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: retention.ms=604800000
+2025-10-26 01:24:52,838 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: unclean.leader.election.enable=false
+2025-10-26 01:24:52,838 - KafkaLeaderDemotion - DEBUG - [_check_min_isr:751] - Topic secound1: min.insync.replicas=2 ✓
+2025-10-26 01:24:52,838 - KafkaLeaderDemotion - DEBUG - [get_topic_config:542] - Fetching config for topic production
+2025-10-26 01:24:55,718 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: min.insync.replicas=2
+2025-10-26 01:24:55,719 - KafkaLeaderDemotion - DEBUG - [get_topic_config:571] - Parsed config: retention.ms=259200000
+2025-10-26 01:24:55,719 - KafkaLeaderDemotion - DEBUG - [_check_min_isr:751] - Topic production: min.insync.replicas=2 ✓
+2025-10-26 01:24:55,719 - KafkaLeaderDemotion - INFO - [run_all_checks:681] - ✓ Topic Min ISR Configuration: PASSED
+2025-10-26 01:24:55,719 - KafkaLeaderDemotion - INFO - [run_all_checks:675] - 
+──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:55,719 - KafkaLeaderDemotion - INFO - [run_all_checks:676] - CHECK: Follower ISR Status
+2025-10-26 01:24:55,719 - KafkaLeaderDemotion - INFO - [run_all_checks:677] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:24:55,719 - KafkaLeaderDemotion - INFO - [get_partition_metadata:404] - Fetching partition metadata
+2025-10-26 01:24:58,661 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: secound
+2025-10-26 01:24:58,661 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-0, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,661 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-1, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,661 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:58,661 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: production2
+2025-10-26 01:24:58,661 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-0, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:58,661 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-1, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-2, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-3, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1001, 1002, 1004]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-4, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1002, 1003]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-5, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1001, 1003]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-6, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1002, 1003]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-7, Leader=1002, Replicas=[1002, 1003, 1004], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-8, Leader=1004, Replicas=[1004, 1001, 1003], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-9, Leader=1001, Replicas=[1001, 1002, 1003], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: test.event
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-0, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-1, Leader=1004, Replicas=[1004, 1003, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:58,662 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-2, Leader=1001, Replicas=[1001, 1003, 1004], ISR=[1001, 1003, 1004]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-3, Leader=1002, Replicas=[1002, 1001, 1003], ISR=[1002, 1003, 1001]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-4, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-5, Leader=1004, Replicas=[1004, 1003, 1002], ISR=[1002, 1003, 1004]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: user-events
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-0, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-1, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-2, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-3, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-4, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-5, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-6, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,663 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-7, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-8, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-9, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-10, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-11, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-12, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-13, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-14, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-15, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-16, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-17, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-18, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,664 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-19, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-20, Leader=1003, Replicas=[1003, 1004, 1001], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-21, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1003, 1004]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-22, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-23, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-24, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-25, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-26, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-27, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-28, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-29, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: secound1
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-0, Leader=1001, Replicas=[1001, 1003, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:58,665 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-1, Leader=1002, Replicas=[1002, 1001, 1003], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1001, 1002, 1004]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: production
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-0, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-1, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-3, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-4, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1001, 1004, 1003]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-5, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1002, 1001, 1003]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-6, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - INFO - [get_partition_metadata:483] - Retrieved metadata for 6 topics
+2025-10-26 01:24:58,666 - KafkaLeaderDemotion - INFO - [get_partition_metadata:487] - Total partitions: 59
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition secound-2 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition production2-9 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition test.event-2 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition user-events-3 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition user-events-6 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition user-events-9 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition user-events-12 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition user-events-15 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition user-events-24 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition secound1-0 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition secound1-2 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - DEBUG - [_check_followers_in_sync:777] - Partition production-2 - all replicas in sync
+2025-10-26 01:24:58,667 - KafkaLeaderDemotion - INFO - [run_all_checks:681] - ✓ Follower ISR Status: PASSED
+2025-10-26 01:24:58,668 - KafkaLeaderDemotion - INFO - [_print_summary:785] - 
+======================================================================
+2025-10-26 01:24:58,668 - KafkaLeaderDemotion - INFO - [_print_summary:786] - PRE-CHECK SUMMARY
+2025-10-26 01:24:58,668 - KafkaLeaderDemotion - INFO - [_print_summary:787] - ======================================================================
+2025-10-26 01:24:58,668 - KafkaLeaderDemotion - INFO - [_print_summary:788] - Passed: 5
+2025-10-26 01:24:58,668 - KafkaLeaderDemotion - INFO - [_print_summary:789] - Failed: 0
+2025-10-26 01:24:58,668 - KafkaLeaderDemotion - INFO - [_print_summary:797] - 
+Passed Checks:
+2025-10-26 01:24:58,668 - KafkaLeaderDemotion - INFO - [_print_summary:799] -   ✓ Controller Health
+2025-10-26 01:24:58,669 - KafkaLeaderDemotion - INFO - [_print_summary:799] -   ✓ Broker Existence
+2025-10-26 01:24:58,669 - KafkaLeaderDemotion - INFO - [_print_summary:799] -   ✓ Under-Replicated Partitions
+2025-10-26 01:24:58,669 - KafkaLeaderDemotion - INFO - [_print_summary:799] -   ✓ Topic Min ISR Configuration
+2025-10-26 01:24:58,669 - KafkaLeaderDemotion - INFO - [_print_summary:799] -   ✓ Follower ISR Status
+2025-10-26 01:24:58,669 - KafkaLeaderDemotion - INFO - [_print_summary:801] - ======================================================================
+
+2025-10-26 01:24:58,670 - KafkaLeaderDemotion - INFO - [__init__:835] - ======================================================================
+2025-10-26 01:24:58,670 - KafkaLeaderDemotion - INFO - [__init__:836] - 🔍 DRY-RUN MODE ENABLED - No actual changes will be made
+2025-10-26 01:24:58,670 - KafkaLeaderDemotion - INFO - [__init__:837] - ======================================================================
+2025-10-26 01:24:58,671 - KafkaLeaderDemotion - INFO - [demote_broker:1236] - ======================================================================
+2025-10-26 01:24:58,671 - KafkaLeaderDemotion - INFO - [demote_broker:1238] - 🔍 DRY-RUN: SIMULATING LEADER DEMOTION FOR BROKER 1001
+2025-10-26 01:24:58,671 - KafkaLeaderDemotion - INFO - [demote_broker:1241] - ======================================================================
+2025-10-26 01:24:58,671 - KafkaLeaderDemotion - INFO - [get_partition_metadata:404] - Fetching partition metadata
+2025-10-26 01:25:01,588 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: secound
+2025-10-26 01:25:01,589 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-0, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,589 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-1, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,589 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1001, 1004, 1002]
+2025-10-26 01:25:01,589 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: production2
+2025-10-26 01:25:01,589 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-0, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:25:01,589 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-1, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:25:01,589 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-2, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:25:01,589 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-3, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1001, 1002, 1004]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-4, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1002, 1003]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-5, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1001, 1003]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-6, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1002, 1003]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-7, Leader=1002, Replicas=[1002, 1003, 1004], ISR=[1002, 1004, 1003]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-8, Leader=1004, Replicas=[1004, 1001, 1003], ISR=[1001, 1004, 1003]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production2-9, Leader=1001, Replicas=[1001, 1002, 1003], ISR=[1002, 1001, 1003]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: test.event
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-0, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-1, Leader=1004, Replicas=[1004, 1003, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-2, Leader=1001, Replicas=[1001, 1003, 1004], ISR=[1001, 1003, 1004]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-3, Leader=1002, Replicas=[1002, 1001, 1003], ISR=[1002, 1003, 1001]
+2025-10-26 01:25:01,590 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-4, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: test.event-5, Leader=1004, Replicas=[1004, 1003, 1002], ISR=[1002, 1003, 1004]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: user-events
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-0, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-1, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-2, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-3, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-4, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-5, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-6, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-7, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-8, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:25:01,591 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-9, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-10, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-11, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-12, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-13, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-14, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1001, 1004, 1002]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-15, Leader=1001, Replicas=[1001, 1002, 1004], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-16, Leader=1002, Replicas=[1002, 1001, 1004], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-17, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-18, Leader=1004, Replicas=[1004, 1002, 1001], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,592 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-19, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-20, Leader=1003, Replicas=[1003, 1004, 1001], ISR=[1001, 1004, 1003]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-21, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1003, 1004]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-22, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-23, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-24, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-25, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-26, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1001, 1004, 1003]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-27, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1002, 1001, 1003]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-28, Leader=1002, Replicas=[1002, 1004, 1001], ISR=[1002, 1004, 1001]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: user-events-29, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1004, 1003, 1002]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: secound1
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-0, Leader=1001, Replicas=[1001, 1003, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:25:01,593 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-1, Leader=1002, Replicas=[1002, 1001, 1003], ISR=[1001, 1003, 1002]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: secound1-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1001, 1002, 1004]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:433] - Found topic: production
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-0, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1004, 1003, 1001]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-1, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1001, 1003, 1002]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-2, Leader=1001, Replicas=[1001, 1004, 1002], ISR=[1002, 1001, 1004]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-3, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-4, Leader=1003, Replicas=[1003, 1001, 1004], ISR=[1001, 1004, 1003]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-5, Leader=1003, Replicas=[1003, 1002, 1001], ISR=[1002, 1001, 1003]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - DEBUG - [get_partition_metadata:472] - Added partition: production-6, Leader=1003, Replicas=[1003, 1004, 1002], ISR=[1002, 1004, 1003]
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - INFO - [get_partition_metadata:483] - Retrieved metadata for 6 topics
+2025-10-26 01:25:01,594 - KafkaLeaderDemotion - INFO - [get_partition_metadata:487] - Total partitions: 59
+2025-10-26 01:25:01,595 - KafkaLeaderDemotion - INFO - [find_partitions_to_demote:863] - Found 12 partitions where broker 1001 is leader
+2025-10-26 01:25:01,595 - KafkaLeaderDemotion - INFO - [save_current_state:981] - 🔍 DRY-RUN: Would save state to /data/kafka_demotion_state/demotion_state_broker_1001_20251026_012501.json
+2025-10-26 01:25:01,595 - KafkaLeaderDemotion - INFO - [save_current_state:982] - 🔍 DRY-RUN: State would contain 12 partitions
+2025-10-26 01:25:01,597 - KafkaLeaderDemotion - INFO - [save_current_state:989] - Current state saved to /data/kafka_demotion_state/demotion_state_broker_1001_20251026_012501_dryrun.json
+2025-10-26 01:25:01,597 - KafkaLeaderDemotion - INFO - [get_brokers_resource_info:929] - Gathering resource information for brokers
+2025-10-26 01:25:01,597 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1001
+2025-10-26 01:25:03,677 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1001 hostname: stg-hdpashique103.phonepe.nb6
+2025-10-26 01:25:03,678 - KafkaLeaderDemotion - DEBUG - [get_broker_cpu_usage:181] - Querying CPU metrics for stg-hdpashique103.phonepe.nb6
+2025-10-26 01:25:03,868 - KafkaLeaderDemotion - INFO - [get_broker_cpu_usage:200] - CPU usage for stg-hdpashique103.phonepe.nb6: 8.83%
+2025-10-26 01:25:03,869 - KafkaLeaderDemotion - DEBUG - [get_broker_disk_usage:235] - Querying disk metrics for stg-hdpashique103.phonepe.nb6:/data
+2025-10-26 01:25:03,952 - KafkaLeaderDemotion - INFO - [get_broker_disk_usage:253] - Disk usage for stg-hdpashique103.phonepe.nb6:/data: 1.44%
+2025-10-26 01:25:03,952 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1002
+2025-10-26 01:25:06,122 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1002 hostname: stg-hdpashique102.phonepe.nb6
+2025-10-26 01:25:06,122 - KafkaLeaderDemotion - DEBUG - [get_broker_cpu_usage:181] - Querying CPU metrics for stg-hdpashique102.phonepe.nb6
+2025-10-26 01:25:06,360 - KafkaLeaderDemotion - INFO - [get_broker_cpu_usage:200] - CPU usage for stg-hdpashique102.phonepe.nb6: 5.03%
+2025-10-26 01:25:06,360 - KafkaLeaderDemotion - DEBUG - [get_broker_disk_usage:235] - Querying disk metrics for stg-hdpashique102.phonepe.nb6:/data
+2025-10-26 01:25:06,388 - KafkaLeaderDemotion - INFO - [get_broker_disk_usage:253] - Disk usage for stg-hdpashique102.phonepe.nb6:/data: 1.44%
+2025-10-26 01:25:06,389 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1003
+2025-10-26 01:25:08,539 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1003 hostname: stg-hdpashique101.phonepe.nb6
+2025-10-26 01:25:08,539 - KafkaLeaderDemotion - DEBUG - [get_broker_cpu_usage:181] - Querying CPU metrics for stg-hdpashique101.phonepe.nb6
+2025-10-26 01:25:08,795 - KafkaLeaderDemotion - INFO - [get_broker_cpu_usage:200] - CPU usage for stg-hdpashique101.phonepe.nb6: 13.76%
+2025-10-26 01:25:08,796 - KafkaLeaderDemotion - DEBUG - [get_broker_disk_usage:235] - Querying disk metrics for stg-hdpashique101.phonepe.nb6:/data
+2025-10-26 01:25:08,847 - KafkaLeaderDemotion - INFO - [get_broker_disk_usage:253] - Disk usage for stg-hdpashique101.phonepe.nb6:/data: 1.49%
+2025-10-26 01:25:08,847 - KafkaLeaderDemotion - DEBUG - [get_broker_hostname:307] - Fetching hostname for broker 1004
+2025-10-26 01:25:10,940 - KafkaLeaderDemotion - INFO - [get_broker_hostname:325] - Broker 1004 hostname: stg-hdpashique104.phonepe.nb6
+2025-10-26 01:25:10,941 - KafkaLeaderDemotion - DEBUG - [get_broker_cpu_usage:181] - Querying CPU metrics for stg-hdpashique104.phonepe.nb6
+2025-10-26 01:25:11,134 - KafkaLeaderDemotion - INFO - [get_broker_cpu_usage:200] - CPU usage for stg-hdpashique104.phonepe.nb6: 5.35%
+2025-10-26 01:25:11,135 - KafkaLeaderDemotion - DEBUG - [get_broker_disk_usage:235] - Querying disk metrics for stg-hdpashique104.phonepe.nb6:/data
+2025-10-26 01:25:11,201 - KafkaLeaderDemotion - INFO - [get_broker_disk_usage:253] - Disk usage for stg-hdpashique104.phonepe.nb6:/data: 0.00%
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1003 eligible: CPU=13.76%, Disk=1.49%
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1003 eligible: CPU=13.76%, Disk=1.49%
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1004 as new leader (CPU=5.35%, Disk=0.00%)
+2025-10-26 01:25:11,202 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,203 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,203 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,203 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,203 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,204 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1003 eligible: CPU=13.76%, Disk=1.49%
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1004 as new leader (CPU=5.35%, Disk=0.00%)
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,205 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,206 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1004 eligible: CPU=5.35%, Disk=0.00%
+2025-10-26 01:25:11,206 - KafkaLeaderDemotion - DEBUG - [select_best_replica:896] - Broker 1002 eligible: CPU=5.03%, Disk=1.44%
+2025-10-26 01:25:11,206 - KafkaLeaderDemotion - INFO - [select_best_replica:913] - Selected broker 1002 as new leader (CPU=5.03%, Disk=1.44%)
+2025-10-26 01:25:11,207 - KafkaLeaderDemotion - INFO - [create_reassignment_json:1047] - 🔍 DRY-RUN: Reassignment plan created: /data/kafka_demotion_state/reassignment_dryrun_20251026_012511.json
+2025-10-26 01:25:11,207 - KafkaLeaderDemotion - INFO - [demote_broker:1271] - 
+Leadership Transfer Plan:
+2025-10-26 01:25:11,207 - KafkaLeaderDemotion - INFO - [demote_broker:1272] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:25:11,207 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 secound-2: 1001 → 1002
+2025-10-26 01:25:11,208 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 production2-9: 1001 → 1002
+2025-10-26 01:25:11,208 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 test.event-2: 1001 → 1004
+2025-10-26 01:25:11,208 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 user-events-3: 1001 → 1002
+2025-10-26 01:25:11,208 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 user-events-6: 1001 → 1002
+2025-10-26 01:25:11,208 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 user-events-9: 1001 → 1002
+2025-10-26 01:25:11,208 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 user-events-12: 1001 → 1002
+2025-10-26 01:25:11,208 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 user-events-15: 1001 → 1002
+2025-10-26 01:25:11,209 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 user-events-24: 1001 → 1002
+2025-10-26 01:25:11,209 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 secound1-0: 1001 → 1004
+2025-10-26 01:25:11,209 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 secound1-2: 1001 → 1002
+2025-10-26 01:25:11,209 - KafkaLeaderDemotion - INFO - [demote_broker:1275] - 🔍 production-2: 1001 → 1002
+2025-10-26 01:25:11,209 - KafkaLeaderDemotion - INFO - [demote_broker:1278] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:25:11,209 - KafkaLeaderDemotion - INFO - [execute_reassignment:1064] - 🔍 DRY-RUN: Would execute partition reassignment
+2025-10-26 01:25:11,210 - KafkaLeaderDemotion - INFO - [execute_reassignment:1065] - 🔍 DRY-RUN: Reassignment file: /data/kafka_demotion_state/reassignment_dryrun_20251026_012511.json
+2025-10-26 01:25:11,210 - KafkaLeaderDemotion - INFO - [execute_reassignment:1071] - 🔍 DRY-RUN: Would reassign 12 partitions
+2025-10-26 01:25:11,210 - KafkaLeaderDemotion - INFO - [execute_reassignment:1073] - 🔍 DRY-RUN:   - secound-2 -> [1002, 1001, 1004]
+2025-10-26 01:25:11,210 - KafkaLeaderDemotion - INFO - [execute_reassignment:1073] - 🔍 DRY-RUN:   - production2-9 -> [1002, 1001, 1003]
+2025-10-26 01:25:11,210 - KafkaLeaderDemotion - INFO - [execute_reassignment:1073] - 🔍 DRY-RUN:   - test.event-2 -> [1004, 1001, 1003]
+2025-10-26 01:25:11,211 - KafkaLeaderDemotion - INFO - [execute_reassignment:1073] - 🔍 DRY-RUN:   - user-events-3 -> [1002, 1001, 1004]
+2025-10-26 01:25:11,211 - KafkaLeaderDemotion - INFO - [execute_reassignment:1073] - 🔍 DRY-RUN:   - user-events-6 -> [1002, 1001, 1004]
+2025-10-26 01:25:11,211 - KafkaLeaderDemotion - INFO - [execute_reassignment:1075] - 🔍 DRY-RUN:   ... and 7 more
+2025-10-26 01:25:11,211 - KafkaLeaderDemotion - INFO - [execute_reassignment:1079] - 🔍 DRY-RUN: Skipping actual execution
+2025-10-26 01:25:11,211 - KafkaLeaderDemotion - INFO - [verify_reassignment:1127] - 🔍 DRY-RUN: Would verify partition reassignment
+2025-10-26 01:25:11,211 - KafkaLeaderDemotion - INFO - [verify_reassignment:1128] - 🔍 DRY-RUN: Verification timeout: 300 seconds
+2025-10-26 01:25:11,212 - KafkaLeaderDemotion - INFO - [verify_reassignment:1129] - 🔍 DRY-RUN: Skipping verification (assuming success)
+2025-10-26 01:25:11,212 - KafkaLeaderDemotion - INFO - [demote_broker:1290] - ======================================================================
+2025-10-26 01:25:11,212 - KafkaLeaderDemotion - INFO - [demote_broker:1292] - 🔍 DRY-RUN: SIMULATION COMPLETED FOR BROKER 1001
+2025-10-26 01:25:11,212 - KafkaLeaderDemotion - INFO - [demote_broker:1293] - 🔍 DRY-RUN: No actual changes were made to the cluster
+2025-10-26 01:25:11,212 - KafkaLeaderDemotion - INFO - [demote_broker:1294] - 🔍 DRY-RUN: Review the plan above and state file: /data/kafka_demotion_state/demotion_state_broker_1001_20251026_012501_dryrun.json
+2025-10-26 01:25:11,212 - KafkaLeaderDemotion - INFO - [demote_broker:1295] - 🔍 DRY-RUN: Reassignment file created: /data/kafka_demotion_state/reassignment_dryrun_20251026_012511.json
+2025-10-26 01:25:11,212 - KafkaLeaderDemotion - INFO - [demote_broker:1296] - 
+2025-10-26 01:25:11,212 - KafkaLeaderDemotion - INFO - [demote_broker:1297] - To execute for real, run without --dry-run flag:
+2025-10-26 01:25:11,213 - KafkaLeaderDemotion - INFO - [demote_broker:1298] -   python3 kafka_leader_demotion.py --config <config> --broker-id 1001
+2025-10-26 01:25:11,213 - KafkaLeaderDemotion - INFO - [demote_broker:1302] - ======================================================================
+2025-10-26 01:25:11,213 - KafkaLeaderDemotion - INFO - [main:1651] - ✓ Leader demotion simulation completed successfully
+2025-10-26 01:25:11,213 - KafkaLeaderDemotion - INFO - [main:1652] - To execute for real: python kafka_leader_demotion.py --config leader-demoter-input.yaml --broker-id 1001

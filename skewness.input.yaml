@@ -1,0 +1,181 @@
+# Kafka Partition Balancer Configuration File
+# Version: 4.0.0 (Enhanced - OpenTSDB Integration + Batch Processing)
+
+# Kafka Cluster Configuration
+kafka:
+  # Bootstrap servers (comma-separated)
+  # NOTE: Use port 6667 for your Kafka brokers
+  bootstrap_servers: "stg-hdpashique101:6667,stg-hdpashique102:6667,stg-hdpashique103:6667"
+  
+  # Zookeeper connection string
+  zookeeper_connect: "stg-hdpashique103:2181"
+  
+  # Kafka bin directory (auto-detected if empty)
+  bin_dir: "/usr/odp/3.2.2.0-1/kafka/bin"
+
+# OpenTSDB Configuration
+opentsdb:
+  # OpenTSDB API URL
+  url: "http://opentsdb-read-no-dp-limit.nixy.stg-drove.phonepe.nb6"
+  
+  # Disk mount path to monitor (must match Telegraf configuration)
+  disk_mount_path: "/data"
+  
+  # Metric names (from Telegraf)
+  metrics:
+    # CPU idle metric (we calculate usage as 100 - idle)
+    cpu: "cpu.field.usage_idle"
+    
+    # Disk used percentage metric
+    disk: "disk.field.used_percent"
+  
+  # Query settings
+  query:
+    # Time window for metrics (default: 24 hours)
+    time_window: "24h-ago"
+    
+    # Timeout for OpenTSDB queries in seconds
+    timeout: 30
+
+# Rebalancing Thresholds
+thresholds:
+  # Leader skewness threshold percentage (default: 10%)
+  # If leader deviation exceeds this, rebalancing is triggered
+  skew_percent: 15.0
+  
+  # NEW: Replica count skewness threshold percentage (default: 10%)
+  # If replica count deviation exceeds this, rebalancing is triggered
+  replica_skew_percent: 20.0
+  
+  # Maximum disk usage percentage per broker (default: 80%)
+  # Brokers above this threshold are NOT eligible for new partitions
+  disk_max_percent: 80.0
+  
+  # Maximum disk usage difference between brokers (default: 15%)
+  # If difference exceeds this, rebalancing is triggered
+  disk_max_diff_percent: 15.0
+  
+  # CPU usage threshold for leader placement (default: 70%)
+  # Brokers with CPU > this get lower priority for leaders
+  cpu_max_percent: 70.0
+
+# Reassignment Configuration
+reassignment:
+  # Replication throttle in bytes per second (default: 50MB/s)
+  # Prevents network saturation during reassignment
+  throttle_bytes_per_sec: 52428800  # 50 MB/s
+  
+  # NEW: Batch size for partition reassignment (default: 50)
+  # Number of partitions to reassign in each batch
+  # Smaller batches = more gradual, less cluster impact
+  # Larger batches = faster completion, higher impact
+  batch_size: 50
+  
+  # NEW: Wait time between batches in seconds (default: 60)
+  # Time to wait after completing one batch before starting next
+  # Allows cluster to stabilize between batches
+  batch_wait_seconds: 60
+  
+  # Maximum time to wait for reassignment completion (seconds)
+  timeout_seconds: 3600  # 1 hour
+  
+  # Check interval for monitoring progress (seconds)
+  check_interval: 30
+
+# Logging Configuration
+logging:
+  # Log directory
+  dir: "/var/log/kafka-tools"
+  
+  # Log level (DEBUG, INFO, WARNING, ERROR)
+  level: "INFO"
+  
+  # Keep log files for N days
+  retention_days: 30
+
+# Advanced Settings (Optional)
+advanced:
+  # Partition size estimation (bytes)
+  # Used when actual partition size cannot be determined
+  default_partition_size_bytes: 104857600  # 100 MB
+  
+  # Average message size for estimation (bytes)
+  avg_message_size_bytes: 1024  # 1 KB
+  
+  # NEW: Maximum retries for preferred leader election (default: 2)
+  # If leader skewness is not resolved after first attempt,
+  # will retry up to this many times before moving to comprehensive rebalancing
+  leader_election_max_retries: 2
+  
+  # NEW: Wait time between leader election retries (seconds)
+  # Time to wait for cluster stabilization between election attempts
+  leader_election_wait_seconds: 30
+  
+  # Enable detailed debug logging
+  debug: false
+  
+  # Dry-run by default (safety feature)
+  default_dry_run: true
+
+# =============================================================================
+# CONFIGURATION GUIDE
+# =============================================================================
+#
+# REPLICA COUNT SKEWNESS DETECTION (NEW):
+# ----------------------------------------
+# The script now considers BOTH disk usage AND replica count when detecting
+# skewness. Set 'replica_skew_percent' to control sensitivity.
+#
+# Example: If you have 4 brokers with 100 total replicas:
+#   - Expected: 25 replicas per broker
+#   - If one broker has 30 replicas: deviation = 20%
+#   - If replica_skew_percent = 10%, skewness will be detected
+#
+# BATCH-WISE REASSIGNMENT (NEW):
+# -------------------------------
+# Instead of moving all partitions at once, the script now processes them
+# in batches to reduce cluster impact:
+#
+#   batch_size: 50        → Process 50 partitions per batch
+#   batch_wait_seconds: 60 → Wait 60s between batches
+#
+# For large clusters with 1000s of partitions:
+#   - Use smaller batch_size (25-50) for safety
+#   - Use longer batch_wait_seconds (90-120) for stability
+#
+# For small clusters with <200 partitions:
+#   - Use larger batch_size (100+) for speed
+#   - Use shorter batch_wait_seconds (30-60)
+#
+# TWO-PHASE LEADER ELECTION (NEW):
+# ---------------------------------
+# When leader skewness is detected:
+#
+# Phase 1: Preferred Leader Election (Fast)
+#   - Attempts to move leaders to preferred replicas
+#   - Verifies if skewness is resolved
+#   - Retries up to 'leader_election_max_retries' times
+#
+# Phase 2: Comprehensive Rebalancing (Thorough)
+#   - Only triggered if Phase 1 fails to resolve skewness
+#   - Performs full replica shuffle with intelligent placement
+#   - Processes partitions in batches
+#   - Runs leader election afterward
+#
+# TUNING RECOMMENDATIONS:
+# -----------------------
+# For production clusters:
+#   replica_skew_percent: 10.0       (balanced)
+#   disk_max_diff_percent: 15.0      (balanced)
+#   batch_size: 50                   (safe default)
+#   batch_wait_seconds: 60           (safe default)
+#   leader_election_max_retries: 2   (allows verification)
+#
+# For test/staging clusters:
+#   replica_skew_percent: 5.0        (more aggressive)
+#   disk_max_diff_percent: 10.0      (more aggressive)
+#   batch_size: 100                  (faster)
+#   batch_wait_seconds: 30           (faster)
+#   leader_election_max_retries: 1   (faster)
+#
+# =============================================================================

@@ -1,0 +1,63 @@
+2025-10-28 22:16:35,624 - INFO - Log file: logs/kafka_alter_20251028_221635.log
+2025-10-28 22:16:35,628 - INFO - ✓ Configuration loaded and validated
+2025-10-28 22:16:35,629 - DEBUG - Checking /etc/kafka/conf/kafka-env.sh
+2025-10-28 22:16:35,630 - INFO - Found Kafka from kafka-env.sh: /usr/odp/current/kafka-broker/bin
+2025-10-28 22:16:35,630 - INFO - Using Kafka tools: /usr/odp/current/kafka-broker/bin
+2025-10-28 22:16:35,630 - INFO - ================================================================================
+2025-10-28 22:16:35,630 - INFO - KAFKA TOPIC ALTERATION
+2025-10-28 22:16:35,630 - INFO - ================================================================================
+2025-10-28 22:16:35,630 - INFO - Topics to process: 1
+2025-10-28 22:16:35,630 - INFO -   - testing1
+2025-10-28 22:16:35,630 - INFO - Dry run: False
+2025-10-28 22:16:35,630 - INFO - ================================================================================
+2025-10-28 22:16:35,630 - INFO - Testing broker connectivity...
+2025-10-28 22:16:35,631 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-broker-api-versions.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667
+2025-10-28 22:16:38,246 - INFO - ✓ Connected to brokers
+2025-10-28 22:16:38,246 - INFO - 
+================================================================================
+2025-10-28 22:16:38,246 - INFO - PROCESSING TOPIC 1/1: testing1
+2025-10-28 22:16:38,247 - INFO - ================================================================================
+2025-10-28 22:16:38,247 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 22:16:38,247 - INFO - PROCESSING: RETENTION ALTERATION
+2025-10-28 22:16:38,247 - INFO - --------------------------------------------------------------------------------
+2025-10-28 22:16:38,248 - INFO - ================================================================================
+2025-10-28 22:16:38,248 - INFO - CONFIG CHANGE PRE-CHECKS: retention.ms
+2025-10-28 22:16:38,248 - INFO - ================================================================================
+2025-10-28 22:16:38,248 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --topic testing1
+2025-10-28 22:16:41,088 - INFO - ✓ Topic exists
+2025-10-28 22:16:41,089 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --entity-type topics --entity-name testing1
+2025-10-28 22:16:43,931 - INFO - Current retention.ms: 604800000
+2025-10-28 22:16:43,932 - INFO - Checking disk usage via kafka-log-dirs.sh...
+2025-10-28 22:16:43,932 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-log-dirs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe
+2025-10-28 22:16:46,912 - INFO - Broker 1001: /data/kafka-logs - Kafka data: 0.00GB | Disk: 91.5GB free / 97.9GB total (6.5% used)
+2025-10-28 22:16:46,912 - INFO - Broker 1004: /data/kafka-logs - Kafka data: 0.00GB | Disk: 91.5GB free / 97.9GB total (6.5% used)
+2025-10-28 22:16:46,913 - INFO - Broker 1003: /data/kafka-logs - Kafka data: 0.00GB | Disk: 91.5GB free / 97.9GB total (6.5% used)
+2025-10-28 22:16:46,913 - INFO - Broker 1002: /data/kafka-logs - Kafka data: 0.00GB | Disk: 91.5GB free / 97.9GB total (6.5% used)
+2025-10-28 22:16:46,913 - INFO - Highest disk usage: 6.5% on broker 1001
+2025-10-28 22:16:46,913 - INFO - ================================================================================
+2025-10-28 22:16:46,913 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --alter --entity-type topics --entity-name testing1 --add-config retention.ms=1209600000
+2025-10-28 22:16:49,831 - INFO - ✓ Set retention.ms=1209600000
+2025-10-28 22:16:49,831 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 22:16:49,832 - INFO - PROCESSING: CONFIG ALTERATIONS
+2025-10-28 22:16:49,832 - INFO - --------------------------------------------------------------------------------
+2025-10-28 22:16:49,832 - INFO - 
+Processing: min.insync.replicas=3
+2025-10-28 22:16:49,832 - INFO - ================================================================================
+2025-10-28 22:16:49,832 - INFO - CONFIG CHANGE PRE-CHECKS: min.insync.replicas
+2025-10-28 22:16:49,832 - INFO - ================================================================================
+2025-10-28 22:16:49,832 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --topic testing1
+2025-10-28 22:16:52,613 - INFO - ✓ Topic exists
+2025-10-28 22:16:52,613 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --entity-type topics --entity-name testing1
+2025-10-28 22:16:55,413 - INFO - ✓ min.insync.replicas (3) <= RF (3)
+2025-10-28 22:16:55,413 - INFO - ================================================================================
+2025-10-28 22:16:55,413 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --alter --entity-type topics --entity-name testing1 --add-config min.insync.replicas=3
+2025-10-28 22:16:58,295 - INFO - ✓ Set min.insync.replicas=3
+2025-10-28 22:16:58,296 - INFO - ✓ Successfully processed testing1
+2025-10-28 22:16:58,296 - INFO - 
+================================================================================
+2025-10-28 22:16:58,296 - INFO - OPERATION SUMMARY
+2025-10-28 22:16:58,296 - INFO - ================================================================================
+2025-10-28 22:16:58,296 - INFO - ✓ Operation completed successfully
+2025-10-28 22:16:58,296 - INFO - ================================================================================

@@ -1,0 +1,2 @@
+[console_scripts]
+kafka_broker_demoter = kafka_broker_demoter.cli:main

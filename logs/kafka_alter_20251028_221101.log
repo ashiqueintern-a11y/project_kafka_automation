@@ -1,0 +1,54 @@
+2025-10-28 22:11:01,185 - INFO - Log file: logs/kafka_alter_20251028_221101.log
+2025-10-28 22:11:01,189 - INFO - ✓ Configuration loaded and validated
+2025-10-28 22:11:01,190 - DEBUG - Checking /etc/kafka/conf/kafka-env.sh
+2025-10-28 22:11:01,191 - INFO - Found Kafka from kafka-env.sh: /usr/odp/current/kafka-broker/bin
+2025-10-28 22:11:01,191 - INFO - Using Kafka tools: /usr/odp/current/kafka-broker/bin
+2025-10-28 22:11:01,191 - INFO - ================================================================================
+2025-10-28 22:11:01,192 - INFO - KAFKA TOPIC ALTERATION
+2025-10-28 22:11:01,192 - INFO - ================================================================================
+2025-10-28 22:11:01,192 - INFO - Topics to process: 1
+2025-10-28 22:11:01,192 - INFO -   - testing1
+2025-10-28 22:11:01,192 - INFO - Dry run: False
+2025-10-28 22:11:01,192 - INFO - ================================================================================
+2025-10-28 22:11:01,192 - INFO - Testing broker connectivity...
+2025-10-28 22:11:01,192 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-broker-api-versions.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667
+2025-10-28 22:11:03,863 - INFO - ✓ Connected to brokers
+2025-10-28 22:11:03,863 - INFO - 
+================================================================================
+2025-10-28 22:11:03,864 - INFO - PROCESSING TOPIC 1/1: testing1
+2025-10-28 22:11:03,864 - INFO - ================================================================================
+2025-10-28 22:11:03,864 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 22:11:03,864 - INFO - PROCESSING: RETENTION ALTERATION
+2025-10-28 22:11:03,864 - INFO - --------------------------------------------------------------------------------
+2025-10-28 22:11:03,865 - INFO - ================================================================================
+2025-10-28 22:11:03,865 - INFO - CONFIG CHANGE PRE-CHECKS: retention.ms
+2025-10-28 22:11:03,865 - INFO - ================================================================================
+2025-10-28 22:11:03,865 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --topic testing1
+2025-10-28 22:11:06,859 - INFO - ✓ Topic exists
+2025-10-28 22:11:06,860 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --entity-type topics --entity-name testing1
+2025-10-28 22:11:09,783 - INFO - Current retention.ms: 604800000
+2025-10-28 22:11:09,783 - INFO - Checking disk usage via kafka-log-dirs.sh...
+2025-10-28 22:11:09,784 - DEBUG - Running: /usr/odp/current/kafka-broker/bin/kafka-log-dirs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe
+2025-10-28 22:11:12,730 - ERROR - Fatal error: name 'json' is not defined
+Traceback (most recent call last):
+  File "kafka_topic_alter.py", line 380, in get_disk_usage
+    data = json.loads(output)
+NameError: name 'json' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "kafka_topic_alter.py", line 867, in main
+    success = alterator.run()
+  File "kafka_topic_alter.py", line 705, in run
+    success = self._process_single_topic(topic)
+  File "kafka_topic_alter.py", line 733, in _process_single_topic
+    success &= self._alter_retention(topic, alterations['retention'])
+  File "kafka_topic_alter.py", line 766, in _alter_retention
+    if not self.checks.validate_config_change(topic, 'retention.ms', new_ms, current_ms):
+  File "kafka_topic_alter.py", line 643, in validate_config_change
+    disk_usage, disk_info = self.kafka.get_disk_usage()
+  File "kafka_topic_alter.py", line 490, in get_disk_usage
+    except json.JSONDecodeError as e:
+NameError: name 'json' is not defined

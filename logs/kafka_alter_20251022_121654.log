@@ -1,0 +1,40 @@
+2025-10-22 12:16:54,774 - INFO - Log file: logs/kafka_alter_20251022_121654.log
+2025-10-22 12:16:54,777 - INFO - ✓ Configuration loaded and validated
+2025-10-22 12:16:54,780 - INFO - Using Kafka tools: /usr/odp/3.2.2.0-1/kafka/bin
+2025-10-22 12:16:54,781 - INFO - ================================================================================
+2025-10-22 12:16:54,781 - INFO - KAFKA TOPIC ALTERATION
+2025-10-22 12:16:54,781 - INFO - ================================================================================
+2025-10-22 12:16:54,781 - INFO - Topic: user-events
+2025-10-22 12:16:54,781 - INFO - Dry run: False
+2025-10-22 12:16:54,781 - INFO - ================================================================================
+2025-10-22 12:16:54,781 - INFO - Testing broker connectivity...
+2025-10-22 12:16:54,781 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server stg-hdpashique101:6667,stg-hdpashique102:6667
+2025-10-22 12:16:57,275 - INFO - ✓ Connected to brokers
+2025-10-22 12:16:57,276 - INFO - 
+================================================================================
+2025-10-22 12:16:57,276 - INFO - PROCESSING: PARTITION ALTERATION
+2025-10-22 12:16:57,276 - INFO - ================================================================================
+2025-10-22 12:16:57,276 - INFO - ================================================================================
+2025-10-22 12:16:57,276 - INFO - PARTITION INCREASE PRE-CHECKS
+2025-10-22 12:16:57,276 - INFO - ================================================================================
+2025-10-22 12:16:57,277 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101:6667,stg-hdpashique102:6667 --describe --topic user-events
+2025-10-22 12:17:00,039 - INFO - ✓ Topic exists
+2025-10-22 12:17:00,039 - INFO - Current partitions: 10
+2025-10-22 12:17:00,039 - WARNING - ⚠ Partition count mismatch
+2025-10-22 12:17:00,039 - INFO - ✓ Target (24) > Current (10)
+2025-10-22 12:17:00,039 - INFO - ✓ All 10 partitions have healthy ISR
+2025-10-22 12:17:00,039 - DEBUG - Running: df -h /kafka/data
+2025-10-22 12:17:00,045 - INFO - Disk usage: 0.0%
+2025-10-22 12:17:00,045 - INFO - ✓ Disk usage acceptable
+2025-10-22 12:17:00,045 - WARNING - ⚠ Resource impact: +14 partitions
+2025-10-22 12:17:00,045 - INFO - ================================================================================
+2025-10-22 12:17:00,045 - WARNING - ⚠ Config shows 12 partitions, actual is 10
+2025-10-22 12:17:00,045 - WARNING - ⚠ Adding 14 partitions will increase broker resource usage
+2025-10-22 12:17:00,046 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101:6667,stg-hdpashique102:6667 --alter --topic user-events --partitions 24
+2025-10-22 12:17:03,229 - INFO - ✓ Partitions set to 24
+2025-10-22 12:17:03,229 - INFO - 
+================================================================================
+2025-10-22 12:17:03,229 - INFO - OPERATION SUMMARY
+2025-10-22 12:17:03,229 - INFO - ================================================================================
+2025-10-22 12:17:03,229 - INFO - ✓ Operation completed successfully
+2025-10-22 12:17:03,229 - INFO - ================================================================================

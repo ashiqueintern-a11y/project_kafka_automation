@@ -1,0 +1,14 @@
+topic:
+  name: secound23
+  partitions: 3
+  replication_factor: 3
+
+cluster:
+  bootstrap_servers:
+    - stg-hdpashique101:6667
+    - stg-hdpashique102:6667
+
+config:
+  retention.ms: 604800000
+  min.insync.replicas: 2
+  unclean.leader.election.enable: false

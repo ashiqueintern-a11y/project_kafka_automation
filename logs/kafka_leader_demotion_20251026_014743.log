@@ -1,0 +1,58 @@
+2025-10-26 01:47:43,431 - KafkaLeaderDemotion - INFO - [setup_logging:77] - Logging initialized. Log file: ./logs/kafka_leader_demotion_20251026_014743.log
+2025-10-26 01:47:43,432 - KafkaLeaderDemotion - INFO - [main:1696] - Loading configuration from leader-demoter-input.yaml
+2025-10-26 01:47:43,435 - KafkaLeaderDemotion - INFO - [_load_config:106] - Configuration loaded from leader-demoter-input.yaml
+2025-10-26 01:47:43,435 - KafkaLeaderDemotion - INFO - [_validate_config:132] - Configuration validation passed
+2025-10-26 01:47:43,435 - KafkaLeaderDemotion - INFO - [main:1700] - Initializing Kafka cluster manager
+2025-10-26 01:47:43,435 - KafkaLeaderDemotion - INFO - [main:1705] - Operating in ROLLBACK mode for broker 1001
+2025-10-26 01:47:43,435 - KafkaLeaderDemotion - INFO - [rollback:1542] - ======================================================================
+2025-10-26 01:47:43,436 - KafkaLeaderDemotion - INFO - [rollback:1546] - STARTING ROLLBACK FOR BROKER 1001
+2025-10-26 01:47:43,436 - KafkaLeaderDemotion - INFO - [rollback:1547] - ======================================================================
+2025-10-26 01:47:43,436 - KafkaLeaderDemotion - INFO - [find_latest_state_file:1459] - Found latest state file: /data/kafka_demotion_state/demotion_state_broker_1001_20251026_012746.json
+2025-10-26 01:47:43,436 - KafkaLeaderDemotion - INFO - [load_state:1476] - Loaded state from /data/kafka_demotion_state/demotion_state_broker_1001_20251026_012746.json
+2025-10-26 01:47:43,437 - KafkaLeaderDemotion - INFO - [load_state:1477] - State timestamp: 20251026_012746
+2025-10-26 01:47:43,437 - KafkaLeaderDemotion - INFO - [load_state:1478] - Broker ID: 1001
+2025-10-26 01:47:43,437 - KafkaLeaderDemotion - INFO - [load_state:1479] - Partitions count: 12
+2025-10-26 01:47:43,438 - KafkaLeaderDemotion - INFO - [create_rollback_reassignment:1527] - Rollback reassignment JSON created: /data/kafka_demotion_state/rollback_reassignment_20251026_014743.json
+2025-10-26 01:47:43,438 - KafkaLeaderDemotion - INFO - [rollback:1576] - 
+Rollback Plan: Restoring 12 partitions
+2025-10-26 01:47:43,438 - KafkaLeaderDemotion - INFO - [rollback:1577] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:47:43,438 - KafkaLeaderDemotion - INFO - [rollback:1582] - secound-2: Restore leadership to broker 1001
+2025-10-26 01:47:43,438 - KafkaLeaderDemotion - INFO - [rollback:1582] - production2-9: Restore leadership to broker 1001
+2025-10-26 01:47:43,438 - KafkaLeaderDemotion - INFO - [rollback:1582] - test.event-2: Restore leadership to broker 1001
+2025-10-26 01:47:43,439 - KafkaLeaderDemotion - INFO - [rollback:1582] - user-events-3: Restore leadership to broker 1001
+2025-10-26 01:47:43,439 - KafkaLeaderDemotion - INFO - [rollback:1582] - user-events-6: Restore leadership to broker 1001
+2025-10-26 01:47:43,439 - KafkaLeaderDemotion - INFO - [rollback:1584] - ... and 7 more partitions
+2025-10-26 01:47:43,439 - KafkaLeaderDemotion - INFO - [rollback:1585] - ──────────────────────────────────────────────────────────────────────
+2025-10-26 01:47:43,439 - KafkaLeaderDemotion - INFO - [execute_reassignment:1090] - Executing partition reassignment
+2025-10-26 01:47:43,439 - KafkaLeaderDemotion - DEBUG - [execute_reassignment:1091] - Command: /usr/odp/3.2.2.0-1/kafka/bin/kafka-reassign-partitions.sh --bootstrap-server stg-hdpashique103:6667 --reassignment-json-file /data/kafka_demotion_state/rollback_reassignment_20251026_014743.json --execute
+2025-10-26 01:47:46,559 - KafkaLeaderDemotion - INFO - [execute_reassignment:1100] - Reassignment output:
+Current partition replica assignment
+
+{"version":1,"partitions":[{"topic":"production","partition":2,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]},{"topic":"production2","partition":9,"replicas":[1002,1001,1003],"log_dirs":["any","any","any"]},{"topic":"secound","partition":2,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]},{"topic":"secound1","partition":0,"replicas":[1004,1001,1003],"log_dirs":["any","any","any"]},{"topic":"secound1","partition":2,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]},{"topic":"test.event","partition":2,"replicas":[1004,1001,1003],"log_dirs":["any","any","any"]},{"topic":"user-events","partition":3,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]},{"topic":"user-events","partition":6,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]},{"topic":"user-events","partition":9,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]},{"topic":"user-events","partition":12,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]},{"topic":"user-events","partition":15,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]},{"topic":"user-events","partition":24,"replicas":[1002,1001,1004],"log_dirs":["any","any","any"]}]}
+
+Save this to use as the --reassignment-json-file option during rollback
+Successfully started partition reassignments for production-2,production2-9,secound-2,secound1-0,secound1-2,test.event-2,user-events-3,user-events-6,user-events-9,user-events-12,user-events-15,user-events-24
+
+2025-10-26 01:47:46,560 - KafkaLeaderDemotion - INFO - [verify_reassignment:1140] - Verifying partition reassignment
+2025-10-26 01:47:49,619 - KafkaLeaderDemotion - DEBUG - [verify_reassignment:1156] - Initial verification output:
+Status of partition reassignment:
+Reassignment of partition production-2 is complete.
+Reassignment of partition production2-9 is complete.
+Reassignment of partition secound-2 is complete.
+Reassignment of partition secound1-0 is complete.
+Reassignment of partition secound1-2 is complete.
+Reassignment of partition test.event-2 is complete.
+Reassignment of partition user-events-3 is complete.
+Reassignment of partition user-events-6 is complete.
+Reassignment of partition user-events-9 is complete.
+Reassignment of partition user-events-12 is complete.
+Reassignment of partition user-events-15 is complete.
+Reassignment of partition user-events-24 is complete.
+
+Clearing broker-level throttles on brokers 1001,1002,1003,1004
+Clearing topic-level throttles on topics production,test.event,secound1,secound,user-events,production2
+2025-10-26 01:47:49,620 - KafkaLeaderDemotion - INFO - [verify_reassignment:1179] - Partition reassignment completed successfully (12 partitions)
+2025-10-26 01:47:49,620 - KafkaLeaderDemotion - INFO - [rollback:1599] - ======================================================================
+2025-10-26 01:47:49,620 - KafkaLeaderDemotion - INFO - [rollback:1608] - BROKER 1001 SUCCESSFULLY RESTORED
+2025-10-26 01:47:49,620 - KafkaLeaderDemotion - INFO - [rollback:1609] - ======================================================================
+2025-10-26 01:47:49,620 - KafkaLeaderDemotion - INFO - [main:1717] - ✓ Rollback completed successfully

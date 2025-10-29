@@ -1,0 +1,5 @@
+bootstrap_servers: "stg-hdpashique103:6667"
+opentsdb_url: "http://opentsdb-read-no-dp-limit.nixy.stg-drove.phonepe.nb6"
+state_dir: "/data/kafka_demotion_state"
+cpu_threshold: 80.0
+disk_threshold: 85.0

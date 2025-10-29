@@ -1,0 +1,10 @@
+topic:
+  name: testing1
+  bootstrap_servers:
+    - stg-hdpashique101.phonepe.nb6:6667
+alteration:
+  retention: 
+    current: 168h 
+    new: 336h   
+  other_configs:
+    min.insync.replicas: 3

@@ -1,0 +1,55 @@
+2025-10-28 21:42:54,997 - INFO - Log file: logs/kafka_alter_20251028_214254.log
+2025-10-28 21:42:55,000 - INFO - ✓ Configuration loaded and validated
+2025-10-28 21:42:55,003 - INFO - Using Kafka tools: /usr/odp/3.2.2.0-1/kafka/bin
+2025-10-28 21:42:55,004 - INFO - ================================================================================
+2025-10-28 21:42:55,004 - INFO - KAFKA TOPIC ALTERATION
+2025-10-28 21:42:55,004 - INFO - ================================================================================
+2025-10-28 21:42:55,004 - INFO - Topics to process: 1
+2025-10-28 21:42:55,004 - INFO -   - testing1
+2025-10-28 21:42:55,004 - INFO - Dry run: False
+2025-10-28 21:42:55,004 - INFO - ================================================================================
+2025-10-28 21:42:55,005 - INFO - Testing broker connectivity...
+2025-10-28 21:42:55,005 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667
+2025-10-28 21:42:57,693 - INFO - ✓ Connected to brokers
+2025-10-28 21:42:57,694 - INFO - 
+================================================================================
+2025-10-28 21:42:57,694 - INFO - PROCESSING TOPIC 1/1: testing1
+2025-10-28 21:42:57,694 - INFO - ================================================================================
+2025-10-28 21:42:57,694 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 21:42:57,694 - INFO - PROCESSING: CONFIG ALTERATIONS
+2025-10-28 21:42:57,694 - INFO - --------------------------------------------------------------------------------
+2025-10-28 21:42:57,694 - INFO - 
+Processing: min.insync.replicas=3
+2025-10-28 21:42:57,694 - INFO - ================================================================================
+2025-10-28 21:42:57,695 - INFO - CONFIG CHANGE PRE-CHECKS: min.insync.replicas
+2025-10-28 21:42:57,695 - INFO - ================================================================================
+2025-10-28 21:42:57,695 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --topic testing1
+2025-10-28 21:43:00,549 - INFO - ✓ Topic exists
+2025-10-28 21:43:00,550 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --entity-type topics --entity-name testing1
+2025-10-28 21:43:03,355 - INFO - ✓ min.insync.replicas (3) <= RF (3)
+2025-10-28 21:43:03,355 - INFO - ================================================================================
+2025-10-28 21:43:03,355 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --alter --entity-type topics --entity-name testing1 --add-config min.insync.replicas=3
+2025-10-28 21:43:06,305 - INFO - ✓ Set min.insync.replicas=3
+2025-10-28 21:43:06,305 - INFO - 
+Processing: retention.ms=20h
+2025-10-28 21:43:06,305 - INFO - ================================================================================
+2025-10-28 21:43:06,305 - INFO - CONFIG CHANGE PRE-CHECKS: retention.ms
+2025-10-28 21:43:06,305 - INFO - ================================================================================
+2025-10-28 21:43:06,306 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --topic testing1
+2025-10-28 21:43:09,283 - INFO - ✓ Topic exists
+2025-10-28 21:43:09,284 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --entity-type topics --entity-name testing1
+2025-10-28 21:43:12,086 - INFO - Current retention.ms: 604800000
+2025-10-28 21:43:12,086 - ERROR - Fatal error: '<' not supported between instances of 'str' and 'int'
+Traceback (most recent call last):
+  File "kafka_topic_alter.py", line 745, in main
+    success = alterator.run()
+  File "kafka_topic_alter.py", line 583, in run
+    success = self._process_single_topic(topic)
+  File "kafka_topic_alter.py", line 615, in _process_single_topic
+    success &= self._alter_configs(topic, alterations['other_configs'])
+  File "kafka_topic_alter.py", line 661, in _alter_configs
+    if not self.checks.validate_config_change(topic, key, value):
+  File "kafka_topic_alter.py", line 515, in validate_config_change
+    if new_value < actual:
+TypeError: '<' not supported between instances of 'str' and 'int'

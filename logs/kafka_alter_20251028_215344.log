@@ -1,0 +1,32 @@
+2025-10-28 21:53:44,177 - INFO - Log file: logs/kafka_alter_20251028_215344.log
+2025-10-28 21:53:44,180 - INFO - ✓ Configuration loaded and validated
+2025-10-28 21:53:44,184 - INFO - Using Kafka tools: /usr/odp/3.2.2.0-1/kafka/bin
+2025-10-28 21:53:44,184 - INFO - ================================================================================
+2025-10-28 21:53:44,184 - INFO - KAFKA TOPIC ALTERATION
+2025-10-28 21:53:44,184 - INFO - ================================================================================
+2025-10-28 21:53:44,184 - INFO - Topics to process: 1
+2025-10-28 21:53:44,184 - INFO -   - testing1
+2025-10-28 21:53:44,185 - INFO - Dry run: False
+2025-10-28 21:53:44,185 - INFO - ================================================================================
+2025-10-28 21:53:44,185 - INFO - Testing broker connectivity...
+2025-10-28 21:53:44,185 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667
+2025-10-28 21:53:46,864 - INFO - ✓ Connected to brokers
+2025-10-28 21:53:46,865 - INFO - 
+================================================================================
+2025-10-28 21:53:46,865 - INFO - PROCESSING TOPIC 1/1: testing1
+2025-10-28 21:53:46,865 - INFO - ================================================================================
+2025-10-28 21:53:46,865 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 21:53:46,865 - INFO - PROCESSING: RETENTION ALTERATION
+2025-10-28 21:53:46,865 - INFO - --------------------------------------------------------------------------------
+2025-10-28 21:53:46,865 - ERROR - Fatal error: string indices must be integers
+Traceback (most recent call last):
+  File "kafka_topic_alter.py", line 745, in main
+    success = alterator.run()
+  File "kafka_topic_alter.py", line 583, in run
+    success = self._process_single_topic(topic)
+  File "kafka_topic_alter.py", line 611, in _process_single_topic
+    success &= self._alter_retention(topic, alterations['retention'])
+  File "kafka_topic_alter.py", line 641, in _alter_retention
+    new_ms = self.config.parse_time(config['new'])
+TypeError: string indices must be integers

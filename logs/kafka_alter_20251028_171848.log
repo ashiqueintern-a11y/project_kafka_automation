@@ -1,0 +1,51 @@
+2025-10-28 17:18:48,998 - INFO - Log file: logs/kafka_alter_20251028_171848.log
+2025-10-28 17:18:49,001 - INFO - ✓ Configuration loaded and validated
+2025-10-28 17:18:49,005 - INFO - Using Kafka tools: /usr/odp/3.2.2.0-1/kafka/bin
+2025-10-28 17:18:49,005 - INFO - ================================================================================
+2025-10-28 17:18:49,005 - INFO - KAFKA TOPIC ALTERATION
+2025-10-28 17:18:49,005 - INFO - ================================================================================
+2025-10-28 17:18:49,005 - INFO - Topics to process: 1
+2025-10-28 17:18:49,005 - INFO -   - testing1
+2025-10-28 17:18:49,006 - INFO - Dry run: False
+2025-10-28 17:18:49,006 - INFO - ================================================================================
+2025-10-28 17:18:49,006 - INFO - Testing broker connectivity...
+2025-10-28 17:18:49,006 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667
+2025-10-28 17:18:51,544 - INFO - ✓ Connected to brokers
+2025-10-28 17:18:51,544 - INFO - 
+================================================================================
+2025-10-28 17:18:51,544 - INFO - PROCESSING TOPIC 1/1: testing1
+2025-10-28 17:18:51,544 - INFO - ================================================================================
+2025-10-28 17:18:51,544 - INFO - 
+--------------------------------------------------------------------------------
+2025-10-28 17:18:51,544 - INFO - PROCESSING: CONFIG ALTERATIONS
+2025-10-28 17:18:51,545 - INFO - --------------------------------------------------------------------------------
+2025-10-28 17:18:51,545 - INFO - 
+Processing: min.insync.replicas=3
+2025-10-28 17:18:51,545 - INFO - ================================================================================
+2025-10-28 17:18:51,545 - INFO - CONFIG CHANGE PRE-CHECKS: min.insync.replicas
+2025-10-28 17:18:51,545 - INFO - ================================================================================
+2025-10-28 17:18:51,545 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --topic testing1
+2025-10-28 17:18:54,439 - INFO - ✓ Topic exists
+2025-10-28 17:18:54,440 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --entity-type topics --entity-name testing1
+2025-10-28 17:18:57,329 - INFO - ✓ min.insync.replicas (3) <= RF (3)
+2025-10-28 17:18:57,330 - INFO - ================================================================================
+2025-10-28 17:18:57,330 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --alter --entity-type topics --entity-name testing1 --add-config min.insync.replicas=3
+2025-10-28 17:19:00,208 - INFO - ✓ Set min.insync.replicas=3
+2025-10-28 17:19:00,209 - INFO - 
+Processing: retention=200
+2025-10-28 17:19:00,209 - INFO - ================================================================================
+2025-10-28 17:19:00,209 - INFO - CONFIG CHANGE PRE-CHECKS: retention
+2025-10-28 17:19:00,209 - INFO - ================================================================================
+2025-10-28 17:19:00,209 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-topics.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --topic testing1
+2025-10-28 17:19:03,071 - INFO - ✓ Topic exists
+2025-10-28 17:19:03,072 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --describe --entity-type topics --entity-name testing1
+2025-10-28 17:19:05,840 - INFO - ================================================================================
+2025-10-28 17:19:05,841 - DEBUG - Running: /usr/odp/3.2.2.0-1/kafka/bin/kafka-configs.sh --bootstrap-server stg-hdpashique101.phonepe.nb6:6667 --alter --entity-type topics --entity-name testing1 --add-config retention=200
+2025-10-28 17:19:08,753 - ERROR - ✗ Failed to alter retention: Command '['/usr/odp/3.2.2.0-1/kafka/bin/kafka-configs.sh', '--bootstrap-server', 'stg-hdpashique101.phonepe.nb6:6667', '--alter', '--entity-type', 'topics', '--entity-name', 'testing1', '--add-config', 'retention=200']' returned non-zero exit status 1.
+2025-10-28 17:19:08,753 - ERROR - ✗ Failed to process testing1
+2025-10-28 17:19:08,753 - INFO - 
+================================================================================
+2025-10-28 17:19:08,754 - INFO - OPERATION SUMMARY
+2025-10-28 17:19:08,754 - INFO - ================================================================================
+2025-10-28 17:19:08,754 - ERROR - ✗ Operation failed
+2025-10-28 17:19:08,754 - INFO - ================================================================================
