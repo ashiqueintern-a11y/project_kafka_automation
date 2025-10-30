@@ -747,8 +747,7 @@ class KafkaPartitionBalancer:
         
         if not success:
             logger.error(f"❌ Failed to get log dirs: {stderr}")
-            logger.warning("Falling back to default metrics")
-            return self._create_fallback_metrics(broker_list)
+            raise Exception("Cannot collect broker metrics - kafka-log-dirs.sh failed")
         
         # Parse JSON output from kafka-log-dirs.sh
         # Note: kafka-log-dirs.sh outputs text headers before JSON
@@ -757,8 +756,8 @@ class KafkaPartitionBalancer:
             # Method 1: Find JSON by looking for opening brace
             json_start = stdout.find('{')
             if json_start == -1:
-                logger.warning("No JSON found in kafka-log-dirs.sh output")
-                logger.debug(f"Output was:\n{stdout[:1000]}")
+                logger.error("No JSON found in kafka-log-dirs.sh output")
+                logger.error(f"Output was:\n{stdout[:1000]}")
                 raise ValueError("No JSON found in kafka-log-dirs.sh output")
             
             # Extract only the JSON part
@@ -785,11 +784,13 @@ class KafkaPartitionBalancer:
             brokers = data.get('brokers', [])
             
             if not brokers:
-                logger.warning("No broker data in JSON output")
-                raise ValueError("No broker data found")
+                logger.error("No broker data in JSON output")
+                raise ValueError("No broker data found in kafka-log-dirs.sh")
             
             logger.info(f"\n📊 Broker Metrics Summary:")
             logger.info("=" * 80)
+            
+            metrics_collection_errors = []
             
             for broker_data in brokers:
                 broker_id = broker_data.get('broker')
@@ -805,11 +806,13 @@ class KafkaPartitionBalancer:
                 total_bytes = 0
                 partition_count = 0
                 log_dirs = broker_data.get('logDirs', [])
+                has_log_dir_error = False
                 
                 for log_dir in log_dirs:
                     # Check if log_dir has error
                     if 'error' in log_dir and log_dir['error'] is not None:
-                        logger.warning(f"  Broker {broker_id}: Log dir error - {log_dir.get('error')}")
+                        logger.error(f"  Broker {broker_id}: Log dir error - {log_dir.get('error')}")
+                        has_log_dir_error = True
                         continue
                     
                     partitions = log_dir.get('partitions', [])
@@ -817,6 +820,9 @@ class KafkaPartitionBalancer:
                         size = partition.get('size', 0)
                         total_bytes += size
                         partition_count += 1
+                
+                if has_log_dir_error:
+                    metrics_collection_errors.append(f"Broker {broker_id} has log directory errors")
                 
                 broker_metric.disk_usage_bytes = total_bytes
                 
@@ -826,34 +832,31 @@ class KafkaPartitionBalancer:
                 logger.info(f"\nBroker {broker_id} ({broker_metric.hostname}):")
                 logger.info(f"  Kafka Data Size: {total_gb:.2f} GB ({partition_count} partitions)")
                 
-                # Estimate disk percentage based on Kafka data size
-                # You can adjust these thresholds based on your disk capacity
-                if total_gb > 500:
-                    broker_metric.disk_usage_percent = 95.0
-                elif total_gb > 400:
-                    broker_metric.disk_usage_percent = 90.0
-                elif total_gb > 300:
-                    broker_metric.disk_usage_percent = 85.0
-                elif total_gb > 200:
-                    broker_metric.disk_usage_percent = 75.0
-                elif total_gb > 100:
-                    broker_metric.disk_usage_percent = 65.0
-                elif total_gb > 50:
-                    broker_metric.disk_usage_percent = 55.0
-                elif total_gb > 20:
-                    broker_metric.disk_usage_percent = 45.0
-                elif total_gb > 10:
-                    broker_metric.disk_usage_percent = 40.0
-                elif total_gb > 5:
-                    broker_metric.disk_usage_percent = 35.0
-                elif total_gb > 1:
-                    broker_metric.disk_usage_percent = 32.0
+                # NO DEFAULTS - Disk percentage must come from actual calculation
+                # If you want real disk %, you need to set total disk capacity or use OpenTSDB
+                # For now, we'll calculate based on Kafka data size
+                # You MUST configure disk thresholds based on your actual disk capacity
+                
+                # Option 1: If total_bytes is 0, we cannot estimate - set to None
+                if total_bytes == 0:
+                    broker_metric.disk_usage_percent = 0.0
+                    logger.warning(f"  ⚠️  Disk Usage: 0.0% (No Kafka data - partitions are empty)")
                 else:
-                    broker_metric.disk_usage_percent = 30.0
+                    # Calculate percentage based on actual data
+                    # IMPORTANT: Adjust these thresholds based on YOUR disk capacity
+                    # Example: If you have 1TB disks:
+                    #   100GB = 10%, 500GB = 50%, 900GB = 90%
+                    
+                    # Assume 1TB (1024GB) disk capacity - CHANGE THIS based on your actual disk size
+                    assumed_disk_capacity_gb = 1024.0
+                    broker_metric.disk_usage_percent = (total_gb / assumed_disk_capacity_gb) * 100.0
+                    
+                    logger.info(f"  Disk Usage: {broker_metric.disk_usage_percent:.2f}% "
+                               f"(calculated: {total_gb:.2f}GB / {assumed_disk_capacity_gb}GB)")
+                    logger.warning(f"  ⚠️  Using assumed disk capacity: {assumed_disk_capacity_gb}GB - "
+                                 f"Update in code or use OpenTSDB for real disk %")
                 
-                logger.info(f"  Estimated Disk Usage: {broker_metric.disk_usage_percent:.1f}% (based on Kafka data)")
-                
-                # Get CPU from OpenTSDB
+                # Get CPU from OpenTSDB - MANDATORY, NO DEFAULTS
                 cpu_fetched = False
                 if broker_metric.hostname:
                     cpu_idle = self.query_opentsdb_metric(
@@ -870,31 +873,42 @@ class KafkaPartitionBalancer:
                         cpu_fetched = True
                 
                 if not cpu_fetched:
-                    broker_metric.cpu_usage = 30.0
-                    logger.info(f"  CPU Usage: {broker_metric.cpu_usage:.2f}% (default - OpenTSDB unavailable)")
+                    logger.error(f"  ❌ FAILED to fetch CPU from OpenTSDB for {broker_metric.hostname}")
+                    metrics_collection_errors.append(f"Broker {broker_id}: CPU metric unavailable from OpenTSDB")
+                    broker_metric.cpu_usage = None  # Set to None to indicate failure
                 
                 # Warnings
-                if broker_metric.disk_usage_percent > 85.0:
+                if broker_metric.disk_usage_percent is not None and broker_metric.disk_usage_percent > 85.0:
                     logger.warning(f"  ⚠️  CRITICAL: Disk exceeds 85% threshold!")
-                if broker_metric.cpu_usage > 80.0:
+                
+                if broker_metric.cpu_usage is not None and broker_metric.cpu_usage > 80.0:
                     logger.warning(f"  ⚠️  WARNING: CPU exceeds 80%!")
                 
-                logger.info(f"  Health Score: {broker_metric.get_health_score():.2f}")
+                if broker_metric.cpu_usage is not None and broker_metric.disk_usage_percent is not None:
+                    logger.info(f"  Health Score: {broker_metric.get_health_score():.2f}")
+                else:
+                    logger.error(f"  ❌ Cannot calculate health score - missing metrics")
                 
                 metrics[broker_id] = broker_metric
             
             logger.info("=" * 80)
             
+            # If there were any errors collecting metrics, report them
+            if metrics_collection_errors:
+                logger.error("\n⚠️  METRICS COLLECTION ERRORS:")
+                for error in metrics_collection_errors:
+                    logger.error(f"  - {error}")
+                logger.error("\nWARNING: Proceeding with incomplete metrics - results may be inaccurate!")
+                logger.error("Please fix OpenTSDB connectivity or metric configuration.\n")
+            
         except (json.JSONDecodeError, ValueError) as e:
             logger.error(f"Failed to parse kafka-log-dirs output: {e}")
-            logger.debug(f"Full output was:\n{stdout}")
-            logger.warning("Falling back to default metrics")
-            return self._create_fallback_metrics(broker_list)
+            logger.error(f"Full output was:\n{stdout}")
+            raise Exception(f"Cannot parse kafka-log-dirs.sh output: {e}")
         except Exception as e:
             logger.error(f"Unexpected error processing kafka-log-dirs output: {e}")
-            logger.debug(f"Full output was:\n{stdout}")
-            logger.warning("Falling back to default metrics")
-            return self._create_fallback_metrics(broker_list)
+            logger.error(f"Full output was:\n{stdout}")
+            raise
         
         self.broker_metrics = metrics
         return metrics
