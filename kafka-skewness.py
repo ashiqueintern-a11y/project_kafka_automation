@@ -155,6 +155,8 @@ class KafkaPartitionBalancer:
         logger.info(f"Bootstrap Server: {self.bootstrap_server}")
         logger.info(f"Zookeeper: {self.zookeeper_connect}")
         logger.info(f"Kafka Bin: {self.kafka_bin_dir}")
+        logger.info(f"OpenTSDB URL: {self.opentsdb_url}")
+        logger.info(f"OpenTSDB CPU Metric: {self.cpu_metric}")
         logger.info(f"Skew Threshold: {self.skew_threshold}%")
         logger.info(f"Replica Skew Threshold: {self.replica_skew_threshold}%")
         logger.info(f"Disk Threshold: {self.disk_threshold}%")
@@ -670,10 +672,11 @@ class KafkaPartitionBalancer:
         return metadata
     
     def query_opentsdb_metric(self, metric: str, hostname: str, tags: Dict[str, str] = None,
-                             start: str = "24h-ago", aggregator: str = "avg") -> Optional[float]:
+                             start: str = "5m-ago", aggregator: str = "avg") -> Optional[float]:
         """Query OpenTSDB for a specific metric."""
         try:
-            query_tags = {"node_host": hostname}
+            # Use node_host or host as tag based on your OpenTSDB configuration
+            query_tags = {"host": hostname}
             if tags:
                 query_tags.update(tags)
             
@@ -686,31 +689,44 @@ class KafkaPartitionBalancer:
                 }]
             }
             
-            logger.debug(f"Querying OpenTSDB: {metric} for {hostname}")
+            logger.debug(f"Querying OpenTSDB: {self.opentsdb_url}")
+            logger.debug(f"Metric: {metric}, Host: {hostname}, Tags: {query_tags}")
             
             response = requests.post(
                 f"{self.opentsdb_url}/api/query",
                 headers={"Content-Type": "application/json"},
                 json=payload,
-                timeout=30
+                timeout=10
             )
+            
+            logger.debug(f"OpenTSDB Response Status: {response.status_code}")
             
             if response.status_code == 200:
                 data = response.json()
+                logger.debug(f"OpenTSDB Response Data: {data}")
                 
                 if data and len(data) > 0 and 'dps' in data[0]:
                     dps = data[0]['dps']
                     if dps:
                         values = list(dps.values())
                         if aggregator == "min":
-                            return min(values)
+                            result = min(values)
                         elif aggregator == "max":
-                            return max(values)
+                            result = max(values)
                         else:
-                            return sum(values) / len(values)
+                            result = sum(values) / len(values)
+                        
+                        logger.debug(f"OpenTSDB returned value: {result}")
+                        return result
+                else:
+                    logger.warning(f"OpenTSDB returned empty data for {metric} on {hostname}")
             else:
-                logger.warning(f"OpenTSDB query failed: {response.status_code}")
+                logger.warning(f"OpenTSDB query failed with status {response.status_code}: {response.text[:200]}")
             
+        except requests.exceptions.Timeout:
+            logger.warning(f"OpenTSDB query timeout for {metric} on {hostname}")
+        except requests.exceptions.ConnectionError:
+            logger.warning(f"Cannot connect to OpenTSDB at {self.opentsdb_url}")
         except requests.exceptions.RequestException as e:
             logger.warning(f"Failed to query OpenTSDB: {str(e)}")
         except Exception as e:
