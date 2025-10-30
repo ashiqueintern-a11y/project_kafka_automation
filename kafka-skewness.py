@@ -733,7 +733,7 @@ class KafkaPartitionBalancer:
         return metrics
     
     def collect_broker_metrics(self, broker_list: List[int]) -> Dict[int, BrokerMetrics]:
-        """Collect broker health metrics using kafka-log-dirs.sh."""
+        """Collect broker health metrics using kafka-log-dirs.sh (disk) and OpenTSDB (CPU)."""
         logger.info("\n[METRICS] Collecting Broker Metrics using kafka-log-dirs.sh...")
         
         # First, get disk usage from kafka-log-dirs.sh
@@ -788,8 +788,8 @@ class KafkaPartitionBalancer:
                 logger.warning("No broker data in JSON output")
                 raise ValueError("No broker data found")
             
-            logger.info(f"\n📊 Disk Usage Summary (from kafka-log-dirs.sh):")
-            logger.info("=" * 60)
+            logger.info(f"\n📊 Broker Metrics Summary:")
+            logger.info("=" * 80)
             
             for broker_data in brokers:
                 broker_id = broker_data.get('broker')
@@ -801,47 +801,89 @@ class KafkaPartitionBalancer:
                 if broker_id in self.broker_info:
                     broker_metric.hostname = self.broker_info[broker_id]['host']
                 
-                # Sum up all partition sizes for this broker
+                # Sum up all partition sizes for this broker from kafka-log-dirs.sh
                 total_bytes = 0
+                partition_count = 0
                 log_dirs = broker_data.get('logDirs', [])
                 
                 for log_dir in log_dirs:
+                    # Check if log_dir has error
+                    if 'error' in log_dir and log_dir['error'] is not None:
+                        logger.warning(f"  Broker {broker_id}: Log dir error - {log_dir.get('error')}")
+                        continue
+                    
                     partitions = log_dir.get('partitions', [])
                     for partition in partitions:
                         size = partition.get('size', 0)
                         total_bytes += size
+                        partition_count += 1
                 
                 broker_metric.disk_usage_bytes = total_bytes
                 
                 # Convert to GB for display
                 total_gb = total_bytes / (1024 ** 3)
                 
-                # Estimate disk percentage (you can adjust these thresholds)
-                if total_gb > 100:
+                logger.info(f"\nBroker {broker_id} ({broker_metric.hostname}):")
+                logger.info(f"  Kafka Data Size: {total_gb:.2f} GB ({partition_count} partitions)")
+                
+                # Estimate disk percentage based on Kafka data size
+                # You can adjust these thresholds based on your disk capacity
+                if total_gb > 500:
+                    broker_metric.disk_usage_percent = 95.0
+                elif total_gb > 400:
                     broker_metric.disk_usage_percent = 90.0
+                elif total_gb > 300:
+                    broker_metric.disk_usage_percent = 85.0
+                elif total_gb > 200:
+                    broker_metric.disk_usage_percent = 75.0
+                elif total_gb > 100:
+                    broker_metric.disk_usage_percent = 65.0
                 elif total_gb > 50:
-                    broker_metric.disk_usage_percent = 70.0
+                    broker_metric.disk_usage_percent = 55.0
                 elif total_gb > 20:
-                    broker_metric.disk_usage_percent = 50.0
+                    broker_metric.disk_usage_percent = 45.0
+                elif total_gb > 10:
+                    broker_metric.disk_usage_percent = 40.0
+                elif total_gb > 5:
+                    broker_metric.disk_usage_percent = 35.0
+                elif total_gb > 1:
+                    broker_metric.disk_usage_percent = 32.0
                 else:
                     broker_metric.disk_usage_percent = 30.0
                 
-                # Set CPU to a default
-                broker_metric.cpu_usage = 30.0
+                logger.info(f"  Estimated Disk Usage: {broker_metric.disk_usage_percent:.1f}% (based on Kafka data)")
+                
+                # Get CPU from OpenTSDB
+                cpu_fetched = False
+                if broker_metric.hostname:
+                    cpu_idle = self.query_opentsdb_metric(
+                        metric=self.cpu_metric,
+                        hostname=broker_metric.hostname,
+                        start="5m-ago",
+                        aggregator="avg"
+                    )
+                    
+                    if cpu_idle is not None:
+                        # Convert idle to usage: usage = 100 - idle
+                        broker_metric.cpu_usage = 100.0 - cpu_idle
+                        logger.info(f"  CPU Usage: {broker_metric.cpu_usage:.2f}% (from OpenTSDB)")
+                        cpu_fetched = True
+                
+                if not cpu_fetched:
+                    broker_metric.cpu_usage = 30.0
+                    logger.info(f"  CPU Usage: {broker_metric.cpu_usage:.2f}% (default - OpenTSDB unavailable)")
+                
+                # Warnings
+                if broker_metric.disk_usage_percent > 85.0:
+                    logger.warning(f"  ⚠️  CRITICAL: Disk exceeds 85% threshold!")
+                if broker_metric.cpu_usage > 80.0:
+                    logger.warning(f"  ⚠️  WARNING: CPU exceeds 80%!")
+                
+                logger.info(f"  Health Score: {broker_metric.get_health_score():.2f}")
                 
                 metrics[broker_id] = broker_metric
-                
-                warning = ""
-                if broker_metric.disk_usage_percent > 85.0:
-                    warning = " ⚠️  EXCEEDS 85% THRESHOLD"
-                
-                logger.info(f"Broker {broker_id}: {total_gb:.2f} GB used{warning}")
-                logger.info(f"  Hostname: {broker_metric.hostname}")
-                logger.info(f"  Estimated Disk Usage: {broker_metric.disk_usage_percent:.1f}%")
-                logger.info(f"  CPU: {broker_metric.cpu_usage:.2f}% (default)")
-                logger.info(f"  Health Score: {broker_metric.get_health_score():.2f}")
             
-            logger.info("=" * 60)
+            logger.info("=" * 80)
             
         except (json.JSONDecodeError, ValueError) as e:
             logger.error(f"Failed to parse kafka-log-dirs output: {e}")
@@ -855,6 +897,65 @@ class KafkaPartitionBalancer:
             return self._create_fallback_metrics(broker_list)
         
         self.broker_metrics = metrics
+        return metrics
+    
+    def _collect_metrics_from_opentsdb_only(self, broker_list: List[int]) -> Dict[int, BrokerMetrics]:
+        """Collect metrics from OpenTSDB only (fallback when kafka-log-dirs fails)."""
+        logger.info("\n[METRICS] Collecting from OpenTSDB only...")
+        
+        metrics = {}
+        for broker_id in broker_list:
+            broker_metric = BrokerMetrics(broker_id)
+            
+            if broker_id in self.broker_info:
+                broker_metric.hostname = self.broker_info[broker_id]['host']
+            
+            logger.info(f"\nBroker {broker_id} ({broker_metric.hostname}):")
+            
+            # Get CPU from OpenTSDB
+            if broker_metric.hostname:
+                cpu_idle = self.query_opentsdb_metric(
+                    metric=self.cpu_metric,
+                    hostname=broker_metric.hostname,
+                    start="5m-ago",
+                    aggregator="avg"
+                )
+                
+                if cpu_idle is not None:
+                    broker_metric.cpu_usage = 100.0 - cpu_idle
+                    logger.info(f"  CPU Usage: {broker_metric.cpu_usage:.2f}% (from OpenTSDB)")
+                else:
+                    broker_metric.cpu_usage = 30.0
+                    logger.info(f"  CPU Usage: {broker_metric.cpu_usage:.2f}% (default)")
+                
+                # Get Disk from OpenTSDB
+                disk_percent = self.query_opentsdb_metric(
+                    metric=self.disk_metric,
+                    hostname=broker_metric.hostname,
+                    tags={"path": self.disk_mount_path},
+                    start="5m-ago",
+                    aggregator="avg"
+                )
+                
+                if disk_percent is not None:
+                    broker_metric.disk_usage_percent = disk_percent
+                    logger.info(f"  Disk Usage: {disk_percent:.2f}% (from OpenTSDB)")
+                else:
+                    broker_metric.disk_usage_percent = 50.0
+                    logger.info(f"  Disk Usage: {broker_metric.disk_usage_percent:.2f}% (default)")
+            else:
+                broker_metric.cpu_usage = 30.0
+                broker_metric.disk_usage_percent = 50.0
+                logger.info(f"  CPU: {broker_metric.cpu_usage:.2f}% (default)")
+                logger.info(f"  Disk: {broker_metric.disk_usage_percent:.2f}% (default)")
+            
+            broker_metric.disk_total_bytes = 1024 * 1024 * 1024 * 1024  # 1TB estimate
+            broker_metric.disk_usage_bytes = int(broker_metric.disk_total_bytes * (broker_metric.disk_usage_percent / 100.0))
+            
+            logger.info(f"  Health Score: {broker_metric.get_health_score():.2f}")
+            
+            metrics[broker_id] = broker_metric
+        
         return metrics
     
     def collect_partition_metrics(self, metadata: Dict) -> Dict[Tuple[str, int], PartitionMetrics]:
