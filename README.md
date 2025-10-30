@@ -1,95 +1,89 @@
-================================================================================
-2025-10-30 02:13:13,348 - INFO - PHASE 2: OPENTSDB METRICS COLLECTION & ENHANCED ANALYSIS
-2025-10-30 02:13:13,349 - INFO - ================================================================================
-2025-10-30 02:13:13,349 - INFO -
-[ANALYSIS] Retrieving Cluster Metadata...
-2025-10-30 02:13:16,343 - INFO - Found 4 broker(s): [1001, 1002, 1003, 1004]
-2025-10-30 02:13:16,343 - INFO - Found 17 topic(s)
-2025-10-30 02:13:16,343 - INFO -
-Partition Distribution:
-2025-10-30 02:13:16,343 - INFO -   Broker 1001: 27 leaders, 77 replicas
-2025-10-30 02:13:16,343 - INFO -   Broker 1002: 27 leaders, 76 replicas
-2025-10-30 02:13:16,344 - INFO -   Broker 1003: 27 leaders, 81 replicas
-2025-10-30 02:13:16,344 - INFO -   Broker 1004: 26 leaders, 87 replicas
-2025-10-30 02:13:16,344 - INFO -
-[ANALYSIS] Analyzing Partition Skewness with OpenTSDB Metrics...
-2025-10-30 02:13:16,344 - INFO -
-[METRICS] Collecting Broker Metrics using kafka-log-dirs.sh...
-2025-10-30 02:13:19,267 - INFO -
-📊 Disk Usage Summary (from kafka-log-dirs.sh):
-2025-10-30 02:13:19,267 - INFO - ============================================================
-2025-10-30 02:13:19,267 - INFO - Broker 1001: 0.00 GB used
-2025-10-30 02:13:19,267 - INFO -   Hostname: stg-hdpashique103.phonepe.nb6
-2025-10-30 02:13:19,267 - INFO -   Estimated Disk Usage: 30.0%
-2025-10-30 02:13:19,268 - INFO -   CPU: 30.00% (default)
-2025-10-30 02:13:19,268 - INFO -   Health Score: 30.00
-2025-10-30 02:13:19,268 - INFO - Broker 1004: 0.00 GB used
-2025-10-30 02:13:19,268 - INFO -   Hostname: stg-hdpashique104.phonepe.nb6
-2025-10-30 02:13:19,268 - INFO -   Estimated Disk Usage: 30.0%
-2025-10-30 02:13:19,268 - INFO -   CPU: 30.00% (default)
-2025-10-30 02:13:19,268 - INFO -   Health Score: 30.00
-2025-10-30 02:13:19,268 - INFO - Broker 1003: 0.00 GB used
-2025-10-30 02:13:19,269 - INFO -   Hostname: stg-hdpashique101.phonepe.nb6
-2025-10-30 02:13:19,269 - INFO -   Estimated Disk Usage: 30.0%
-2025-10-30 02:13:19,269 - INFO -   CPU: 30.00% (default)
-2025-10-30 02:13:19,269 - INFO -   Health Score: 30.00
-2025-10-30 02:13:19,270 - INFO - Broker 1002: 0.00 GB used
-2025-10-30 02:13:19,270 - INFO -   Hostname: stg-hdpashique102.phonepe.nb6
-2025-10-30 02:13:19,270 - INFO -   Estimated Disk Usage: 30.0%
-2025-10-30 02:13:19,270 - INFO -   CPU: 30.00% (default)
-2025-10-30 02:13:19,270 - INFO -   Health Score: 30.00
-2025-10-30 02:13:19,270 - INFO - ============================================================
-2025-10-30 02:13:19,270 - INFO -
-[METRICS] Collecting Partition Metrics...
-2025-10-30 02:13:19,271 - INFO -
---- Leader Distribution Analysis ---
-2025-10-30 02:13:19,271 - INFO - Broker 1001:
-2025-10-30 02:13:19,271 - INFO -   Leaders: 27 (expected: 26.75, deviation: 0.93%)
-2025-10-30 02:13:19,271 - INFO -   Health Score: 30.00
-2025-10-30 02:13:19,271 - INFO - Broker 1002:
-2025-10-30 02:13:19,271 - INFO -   Leaders: 27 (expected: 26.75, deviation: 0.93%)
-2025-10-30 02:13:19,272 - INFO -   Health Score: 30.00
-2025-10-30 02:13:19,272 - INFO - Broker 1003:
-2025-10-30 02:13:19,272 - INFO -   Leaders: 27 (expected: 26.75, deviation: 0.93%)
-2025-10-30 02:13:19,272 - INFO -   Health Score: 30.00
-2025-10-30 02:13:19,272 - INFO - Broker 1004:
-2025-10-30 02:13:19,272 - INFO -   Leaders: 26 (expected: 26.75, deviation: 2.80%)
-2025-10-30 02:13:19,272 - INFO -   Health Score: 30.00
-2025-10-30 02:13:19,272 - INFO - ✅ Leader distribution is balanced
-2025-10-30 02:13:19,272 - INFO -
---- Replica Distribution Analysis (Disk + Count Aware) ---
-2025-10-30 02:13:19,273 - INFO - Broker 1001:
-2025-10-30 02:13:19,273 - INFO -   Disk Usage: 30.00%
-2025-10-30 02:13:19,273 - INFO -   CPU Usage: 30.00%
-2025-10-30 02:13:19,273 - INFO -   Replicas: 77
-2025-10-30 02:13:19,273 - INFO -   ✅ ELIGIBLE for partition reassignment
-2025-10-30 02:13:19,273 - INFO - Broker 1002:
-2025-10-30 02:13:19,273 - INFO -   Disk Usage: 30.00%
-2025-10-30 02:13:19,273 - INFO -   CPU Usage: 30.00%
-2025-10-30 02:13:19,273 - INFO -   Replicas: 76
-2025-10-30 02:13:19,273 - INFO -   ✅ ELIGIBLE for partition reassignment
-2025-10-30 02:13:19,274 - INFO - Broker 1003:
-2025-10-30 02:13:19,274 - INFO -   Disk Usage: 30.00%
-2025-10-30 02:13:19,274 - INFO -   CPU Usage: 30.00%
-2025-10-30 02:13:19,274 - INFO -   Replicas: 81
-2025-10-30 02:13:19,274 - INFO -   ✅ ELIGIBLE for partition reassignment
-2025-10-30 02:13:19,274 - INFO - Broker 1004:
-2025-10-30 02:13:19,274 - INFO -   Disk Usage: 30.00%
-2025-10-30 02:13:19,274 - INFO -   CPU Usage: 30.00%
-2025-10-30 02:13:19,275 - INFO -   Replicas: 87
-2025-10-30 02:13:19,275 - INFO -   ✅ ELIGIBLE for partition reassignment
-2025-10-30 02:13:19,275 - INFO -
-📊 Disk Range: 30.00% - 30.00% (diff: 0.00%)
-2025-10-30 02:13:19,275 - INFO -
-📊 Replica Count Analysis:
-2025-10-30 02:13:19,275 - INFO - Total Replicas: 321
-2025-10-30 02:13:19,275 - INFO - Expected per Broker: 80.25
-2025-10-30 02:13:19,275 - INFO - Range: 76 - 87 (diff: 11)
-2025-10-30 02:13:19,275 - INFO - ✅ Replica distribution is balanced (both disk and count)
-2025-10-30 02:13:19,275 - INFO -
-================================================================================
-2025-10-30 02:13:19,276 - INFO - PHASE 3: INTELLIGENT REBALANCING (TWO-PHASE APPROACH)
-2025-10-30 02:13:19,276 - INFO - ================================================================================
-2025-10-30 02:13:19,276 - INFO -
-✅ CLUSTER STATUS: HEALTHY & BALANCED
-root@stg-hdpashique101:/home/sre/project_kafka_automation[nb6][stg]#
+root@stg-hdpashique101:/home/sre/project_kafka_automation[nb6][stg]# python3 kafka_demoter.py --config leader-demoter-input.yaml --broker-id 1001 --dry-run
+
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║         Kafka Broker Decommission/Recommission Tool - v2.0.0        ║
+║              Production Grade - Kafka 2.8.2                          ║
+║                                                                      ║
+║  Features:                                                           ║
+║    • Automated broker decommission (stop)                            ║
+║    • Automated broker recommission (start + ISR sync)                ║
+║    • Resource-aware leader reassignment                             ║
+║    • ISR synchronization monitoring                                  ║
+║    • Comprehensive logging                                           ║
+║    • Dry-run mode for testing                                        ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+2025-10-30 13:06:48,662 - INFO - Logging initialized. Log file: ./logs/kafka_decommission_20251030_130648.log
+2025-10-30 13:06:48,662 - INFO - Loading configuration from leader-demoter-input.yaml
+2025-10-30 13:06:48,664 - INFO - Configuration loaded from leader-demoter-input.yaml
+2025-10-30 13:06:48,664 - INFO - kafka_bin_path not configured, attempting auto-detection...
+2025-10-30 13:06:48,665 - INFO - ✓ Auto-detected kafka_bin_path: /usr/odp/current/kafka-broker/bin
+2025-10-30 13:06:48,665 - INFO - zookeeper_server not configured, attempting auto-detection...
+2025-10-30 13:06:48,666 - INFO - ✓ Auto-detected zookeeper_server: stg-hdpashique101.phonepe.nb6:2181
+2025-10-30 13:06:48,666 - INFO - kafka_server_config not configured, attempting auto-detection...
+2025-10-30 13:06:48,666 - INFO - ✓ Auto-detected kafka_server_config: /etc/kafka/conf/server.properties
+2025-10-30 13:06:48,666 - INFO - ✓ Configuration validation passed
+2025-10-30 13:06:48,666 - INFO -   Bootstrap servers: stg-hdpashique103:6667
+2025-10-30 13:06:48,666 - INFO -   Kafka bin path: /usr/odp/current/kafka-broker/bin
+2025-10-30 13:06:48,666 - INFO -   Zookeeper server: stg-hdpashique101.phonepe.nb6:2181
+2025-10-30 13:06:48,666 - INFO -   Server config: /etc/kafka/conf/server.properties
+2025-10-30 13:06:48,666 - INFO -   State directory: /data/kafka_demotion_state
+2025-10-30 13:06:48,666 - INFO -   Log directory: ./logs
+2025-10-30 13:06:48,666 - INFO - Initializing Kafka cluster manager
+2025-10-30 13:06:48,667 - INFO - Initializing broker manager
+2025-10-30 13:06:48,667 - INFO -
+2025-10-30 13:06:48,667 - INFO - ======================================================================
+2025-10-30 13:06:48,667 - INFO - OPERATION: DECOMMISSION BROKER 1001
+2025-10-30 13:06:48,667 - INFO - MODE: DRY-RUN (simulation only)
+2025-10-30 13:06:48,667 - INFO - ======================================================================
+2025-10-30 13:06:48,667 - INFO -
+2025-10-30 13:06:48,667 - INFO - ======================================================================
+2025-10-30 13:06:48,667 - INFO - STARTING PRE-CHECK VALIDATION
+2025-10-30 13:06:48,667 - INFO - ======================================================================
+2025-10-30 13:06:48,667 - INFO -
+──────────────────────────────────────────────────────────────────────
+2025-10-30 13:06:48,668 - INFO - CHECK: Controller Health
+2025-10-30 13:06:48,668 - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-30 13:06:48,668 - INFO - Checking controller health
+2025-10-30 13:06:50,608 - INFO - Controller is broker 1001
+2025-10-30 13:06:50,609 - INFO - ✓ Controller Health: PASSED
+2025-10-30 13:06:50,609 - INFO -
+──────────────────────────────────────────────────────────────────────
+2025-10-30 13:06:50,609 - INFO - CHECK: Broker Existence
+2025-10-30 13:06:50,609 - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-30 13:06:50,609 - INFO - Fetching all broker IDs
+2025-10-30 13:06:54,680 - INFO - Broker 1001 hostname: stg-hdpashique103.phonepe.nb6
+2025-10-30 13:06:56,566 - INFO - Broker 1002 hostname: stg-hdpashique102.phonepe.nb6
+2025-10-30 13:06:58,670 - INFO - Broker 1003 hostname: stg-hdpashique101.phonepe.nb6
+2025-10-30 13:07:00,787 - INFO - Broker 1004 hostname: stg-hdpashique104.phonepe.nb6
+2025-10-30 13:07:00,787 - INFO - Found 4 brokers in cluster
+2025-10-30 13:07:00,787 - INFO - Broker 1001 found: stg-hdpashique103.phonepe.nb6
+2025-10-30 13:07:00,788 - INFO - ✓ Broker Existence: PASSED
+2025-10-30 13:07:00,788 - INFO -
+──────────────────────────────────────────────────────────────────────
+2025-10-30 13:07:00,788 - INFO - CHECK: Under-Replicated Partitions
+2025-10-30 13:07:00,788 - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-30 13:07:00,788 - INFO - Fetching partition metadata
+2025-10-30 13:07:03,872 - INFO - Retrieved metadata for 17 topics
+2025-10-30 13:07:03,872 - INFO - Total partitions: 107
+2025-10-30 13:07:03,872 - INFO - Total under-replicated partitions: 0
+2025-10-30 13:07:03,872 - INFO - No under-replicated partitions found
+2025-10-30 13:07:03,872 - INFO - ✓ Under-Replicated Partitions: PASSED
+2025-10-30 13:07:03,872 - INFO -
+──────────────────────────────────────────────────────────────────────
+2025-10-30 13:07:03,872 - INFO - CHECK: Topic Min ISR Configuration
+2025-10-30 13:07:03,873 - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-30 13:07:03,873 - INFO - Fetching partition metadata
+2025-10-30 13:07:06,752 - INFO - Retrieved metadata for 17 topics
+2025-10-30 13:07:06,752 - INFO - Total partitions: 107
+2025-10-30 13:07:55,473 - INFO - ✓ Topic Min ISR Configuration: PASSED
+2025-10-30 13:07:55,473 - INFO -
+──────────────────────────────────────────────────────────────────────
+2025-10-30 13:07:55,473 - INFO - CHECK: Follower ISR Status
+2025-10-30 13:07:55,473 - INFO - ──────────────────────────────────────────────────────────────────────
+2025-10-30 13:07:55,474 - INFO - Fetching partition metadata
+2025-10-30 13:07:58,434 - INFO - Retrieved metadata for 17 topics
+2025-10-30 13:07:58,434 - INFO - Total partitions: 107
+2025-10-30 13:07:58,436 - INFO - ✓ Follower ISR Status: PASSED
