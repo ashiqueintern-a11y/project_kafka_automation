@@ -112,13 +112,9 @@ state_directory: "/data/kafka_demotion_state"
 log_directory: "/var/log/kafka_decommission"
 
 # ==============================================================================
-# OPTIONAL: OPENTSDB FOR CPU MONITORING
+#  OPENTSDB FOR CPU MONITORING
 # ==============================================================================
-# If configured, the script will query OpenTSDB for broker CPU metrics
-# and use this information when selecting new leaders during decommission.
-# 
-# If not configured, the script will still work but will only consider
-# disk usage when selecting new leaders.
+#
 #
 # Format: "http://hostname:port"
 # Uncomment to enable:
