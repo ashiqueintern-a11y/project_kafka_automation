@@ -87,3 +87,22 @@ root@stg-hdpashique101:/home/sre/project_kafka_automation[nb6][stg]# python3 kaf
 2025-10-30 13:07:58,434 - INFO - Retrieved metadata for 17 topics
 2025-10-30 13:07:58,434 - INFO - Total partitions: 107
 2025-10-30 13:07:58,436 - INFO - ✓ Follower ISR Status: PASSED
+
+
+
+also like that take disk usage as like this
+curl -X POST 'http://opentsdb-read-no-dp-limit.nixy.stg-drove.phonepe.nb6/api/query' \
+> -H 'Content-Type: application/json' \
+> -d '{
+>   "start": "1h-ago",
+>   "queries": [
+>     {
+>       "metric": "disk.field.used_percent",
+>       "aggregator": "avg",
+>       "tags": {
+>         "node_host": "stg-hdpashique101.phonepe.nb6",
+>         "path": "/data"
+>       }
+>     }
+>   ]
+> }'
